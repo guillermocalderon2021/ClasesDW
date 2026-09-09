@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox — Desarrollo Web I, Unidad II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/monokai.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.css">
+</head>
+<body>
+
+  <header class="masthead">
+    <span class="sigla">ESEN</span>
+    <span class="curso">Desarrollo Web I</span>
+    <span class="unidad">Unidad II — Maquetación y diseño web responsivo</span>
+  </header>
+
+  <div class="estructura">
+
+    <!-- INICIO NAVEGACIÓN — este bloque se reutiliza sin cambios en cada tema de la unidad -->
+    <nav class="navegacion-tema">
+      <h2>Temas de la unidad</h2>
+      <ul class="lista-temas">
+        <li class="activo">
+          <a href="flexbox.html">Flexbox</a>
+        </li>
+        <li class="pendiente">
+          <a href="#">Posicionamiento y visualización</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">CSS Grid</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Diseño web responsivo</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Media queries y contenido responsivo</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Sistema de malla de Bootstrap</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Utilidades y componentes de Bootstrap</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+      </ul>
+    </nav>
+    <!-- FIN NAVEGACIÓN -->
+
+    <main class="contenido">
+      <header>
+        <h1>Flexbox</h1>
+        <p class="subtitulo">Unidad II — Desarrollo Web I</p>
+      </header>
+
+      <section>
+        <h2>El problema que resuelve Flexbox</h2>
+        <p>
+          Antes de la introducción de Flexbox, las propiedades disponibles para
+          construir layouts en CSS eran principalmente <code>float</code> y
+          <code>position</code>. Ambas herramientas fueron diseñadas originalmente
+          con otros propósitos y presentaban limitaciones importantes al momento de
+          resolver problemas de distribución que hoy se consideran elementales, entre
+          ellos los siguientes.
+        </p>
+        <ol>
+          <li>Centrar verticalmente un bloque de contenido dentro de su elemento padre.</li>
+          <li>Hacer que varios elementos secundarios de un contenedor ocupen una cantidad igual de espacio, sin importar el ancho o el alto disponible.</li>
+          <li>Hacer que columnas dispuestas una junto a otra adopten la misma altura, incluso cuando contienen cantidades distintas de contenido.</li>
+        </ol>
+        <p>
+          Flexbox, abreviatura de <em>Flexible Box Layout</em>, fue creado
+          específicamente para resolver este tipo de problemas mediante un modelo de
+          distribución pensado para adaptarse al espacio disponible.
+        </p>
+      </section>
+
+      <section>
+        <h2>El modelo de caja flexible</h2>
+        <p>
+          Flexbox es un modelo de diseño unidimensional: distribuye elementos a lo
+          largo de una sola dirección a la vez, ya sea horizontal o vertical. Se
+          compone de dos partes que se definen una respecto de la otra.
+        </p>
+        <ul>
+          <li><strong>Contenedor flexible (flex container):</strong> el elemento padre en el que se establece <code>display: flex</code>. Otorga a sus hijos directos las propiedades de un elemento flexible.</li>
+          <li><strong>Elementos flexibles (flex items):</strong> los hijos directos del contenedor flexible. Su comportamiento depende de las propiedades definidas tanto en el contenedor como en el elemento mismo.</li>
+        </ul>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: contenedor flexible básico</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento"&gt;1&lt;/div&gt;
+  &lt;div class="elemento"&gt;2&lt;/div&gt;
+  &lt;div class="elemento"&gt;3&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  background-color: #eef1f5;
+  padding: 10px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 20px;
+  margin: 5px;
+  text-align: center;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie el valor de <code>display</code> de <code>flex</code> a
+          <code>block</code> y observe que los elementos vuelven a apilarse
+          verticalmente. Restituya <code>display: flex</code> para continuar con el
+          resto de los ejemplos.
+        </p>
+      </section>
+
+      <section>
+        <h2>Los ejes de distribución</h2>
+        <p>
+          Dentro de un contenedor flexible, los elementos se distribuyen con
+          respecto a dos ejes perpendiculares entre sí.
+        </p>
+
+        <svg class="diagrama-ejes" viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama del contenedor flexible con el eje principal y el eje transversal">
+          <rect x="30" y="50" width="500" height="200" fill="none" stroke="#123B7A" stroke-width="2"></rect>
+          <text x="30" y="38" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#2B2B2B">contenedor flexible</text>
+
+          <rect x="55" y="95" width="90" height="110" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"></rect>
+          <text x="100" y="155" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B" text-anchor="middle">elemento</text>
+
+          <rect x="205" y="95" width="90" height="110" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"></rect>
+          <text x="250" y="155" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B" text-anchor="middle">elemento</text>
+
+          <rect x="355" y="95" width="90" height="110" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"></rect>
+          <text x="400" y="155" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B" text-anchor="middle">elemento</text>
+
+          <line x1="30" y1="20" x2="530" y2="20" stroke="#C8AD55" stroke-width="2" marker-end="url(#punta)" marker-start="url(#punta-inicio)"></line>
+          <text x="280" y="12" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#8a6d1f" text-anchor="middle">eje principal (main axis)</text>
+
+          <line x1="565" y1="50" x2="565" y2="250" stroke="#C8AD55" stroke-width="2" marker-end="url(#punta)" marker-start="url(#punta-inicio)"></line>
+          <text font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#8a6d1f" text-anchor="middle" transform="translate(600,150) rotate(90)">eje transversal (cross axis)</text>
+
+          <defs>
+            <marker id="punta" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#C8AD55"></path>
+            </marker>
+            <marker id="punta-inicio" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#C8AD55"></path>
+            </marker>
+          </defs>
+        </svg>
+
+        <p>
+          El <strong>eje principal</strong> (main axis) es el eje que sigue la
+          dirección en la que se colocan los elementos flexibles; su dirección
+          depende del valor de <code>flex-direction</code>. El inicio y el final de
+          este eje se denominan inicio principal (main start) y final principal
+          (main end). El <strong>eje transversal</strong> (cross axis) es
+          perpendicular al eje principal; su inicio y su final se denominan inicio
+          transversal (cross start) y extremo cruzado (cross end).
+        </p>
+        <p>
+          Esta distinción es la base para comprender el efecto de las propiedades
+          que se presentan a continuación: unas actúan sobre el eje principal y
+          otras sobre el eje transversal.
+        </p>
+      </section>
+
+      <section>
+        <h2>Propiedades del contenedor flexible</h2>
+        <p>
+          Las propiedades que se describen en esta sección se aplican al elemento
+          que tiene establecido <code>display: flex</code>, y afectan la forma en la
+          que se distribuyen todos sus elementos flexibles hijos.
+        </p>
+
+        <h3>Dirección y ajuste de línea</h3>
+        <p>
+          La propiedad <code>flex-direction</code> define la dirección del eje
+          principal, con los valores <code>row</code>, <code>row-reverse</code>,
+          <code>column</code> y <code>column-reverse</code>. Por defecto, todos los
+          elementos flexibles intentan ajustarse en una sola línea; la propiedad
+          <code>flex-wrap</code>, con los valores <code>nowrap</code>,
+          <code>wrap</code> y <code>wrap-reverse</code>, permite que se distribuyan
+          en varias líneas cuando no hay suficiente espacio. Ambas propiedades pueden
+          combinarse mediante la abreviatura <code>flex-flow</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 618 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Variantes de flex-direction">
+<defs><marker id="punta2" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#C8AD55"/></marker></defs>
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#123B7A">row</text>
+<rect x="10" y="30" width="130" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="26.0" y="70.0" width="26.0" height="30.0" rx="3" fill="#123B7A"/>
+<rect x="60.0" y="70.0" width="26.0" height="30.0" rx="3" fill="#123B7A"/>
+<rect x="94.0" y="70.0" width="26.0" height="30.0" rx="3" fill="#123B7A"/>
+<line x1="26" y1="126" x2="124" y2="126" stroke="#C8AD55" stroke-width="2" marker-end="url(#punta2)"/>
+<text x="166" y="23" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#123B7A">row-reverse</text>
+<rect x="166" y="30" width="130" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="250.0" y="70.0" width="26.0" height="30.0" rx="3" fill="#123B7A"/>
+<rect x="216.0" y="70.0" width="26.0" height="30.0" rx="3" fill="#123B7A"/>
+<rect x="182.0" y="70.0" width="26.0" height="30.0" rx="3" fill="#123B7A"/>
+<line x1="280" y1="126" x2="182" y2="126" stroke="#C8AD55" stroke-width="2" marker-end="url(#punta2)"/>
+<text x="322" y="23" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#123B7A">column</text>
+<rect x="322" y="30" width="130" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="357.0" y="44.0" width="60.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="357.0" y="72.0" width="60.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="357.0" y="100.0" width="60.0" height="22.0" rx="3" fill="#123B7A"/>
+<line x1="438" y1="44" x2="438" y2="126" stroke="#C8AD55" stroke-width="2" marker-end="url(#punta2)"/>
+<text x="478" y="23" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#123B7A">column-reverse</text>
+<rect x="478" y="30" width="130" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="513.0" y="100.0" width="60.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="513.0" y="72.0" width="60.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="513.0" y="44.0" width="60.0" height="22.0" rx="3" fill="#123B7A"/>
+<line x1="594" y1="126" x2="594" y2="44" stroke="#C8AD55" stroke-width="2" marker-end="url(#punta2)"/>
+</svg>
+
+        <svg class="diagrama-concepto" viewBox="0 0 500 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparación entre flex-wrap nowrap y wrap">
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">nowrap</text>
+<rect x="10" y="30" width="220" height="90" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="18.0" y="59.0" width="34.0" height="32.0" rx="3" fill="#123B7A"/>
+<rect x="56.0" y="59.0" width="34.0" height="32.0" rx="3" fill="#123B7A"/>
+<rect x="94.0" y="59.0" width="34.0" height="32.0" rx="3" fill="#123B7A"/>
+<rect x="132.0" y="59.0" width="34.0" height="32.0" rx="3" fill="#123B7A"/>
+<rect x="170.0" y="59.0" width="34.0" height="32.0" rx="3" fill="#123B7A"/>
+<rect x="208.0" y="59.0" width="16.0" height="32.0" rx="3" fill="#123B7A"/>
+<text x="270" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">wrap</text>
+<rect x="270" y="30" width="220" height="90" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="278.0" y="40.0" width="34.0" height="30.0" rx="3" fill="#C8AD55"/>
+<rect x="316.0" y="40.0" width="34.0" height="30.0" rx="3" fill="#C8AD55"/>
+<rect x="354.0" y="40.0" width="34.0" height="30.0" rx="3" fill="#C8AD55"/>
+<rect x="392.0" y="40.0" width="34.0" height="30.0" rx="3" fill="#C8AD55"/>
+<rect x="278.0" y="78.0" width="34.0" height="30.0" rx="3" fill="#C8AD55"/>
+<rect x="316.0" y="78.0" width="34.0" height="30.0" rx="3" fill="#C8AD55"/>
+</svg>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: flex-direction y flex-wrap</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento"&gt;1&lt;/div&gt;
+  &lt;div class="elemento"&gt;2&lt;/div&gt;
+  &lt;div class="elemento"&gt;3&lt;/div&gt;
+  &lt;div class="elemento"&gt;4&lt;/div&gt;
+  &lt;div class="elemento"&gt;5&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: #eef1f5;
+  padding: 10px;
+  width: 260px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 18px;
+  margin: 5px;
+  min-width: 55px;
+  text-align: center;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          El contenedor tiene un ancho reducido a propósito. Cambie
+          <code>flex-direction</code> a <code>column</code> y observe el cambio de
+          orientación; luego cambie <code>flex-wrap</code> a <code>wrap</code> y
+          observe que los elementos que no caben en la línea pasan a una segunda línea.
+        </p>
+
+        <h3>Distribución en el eje principal</h3>
+        <p>
+          La propiedad <code>justify-content</code> distribuye el espacio libre
+          sobrante a lo largo del eje principal, cuando los elementos no ocupan la
+          totalidad del contenedor. Admite los valores <code>flex-start</code>,
+          <code>flex-end</code>, <code>center</code>, <code>space-between</code>,
+          <code>space-around</code> y <code>space-evenly</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 500 376" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Variantes de justify-content">
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">flex-start</text>
+<rect x="10" y="30" width="220" height="76" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="18.0" y="38.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<rect x="48.0" y="38.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<rect x="78.0" y="38.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<text x="270" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">flex-end</text>
+<rect x="270" y="30" width="220" height="76" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="392.0" y="38.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<rect x="422.0" y="38.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<rect x="452.0" y="38.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<text x="10" y="153" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">center</text>
+<rect x="10" y="160" width="220" height="76" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="75.0" y="168.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<rect x="105.0" y="168.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<rect x="135.0" y="168.0" width="30.0" height="60.0" rx="3" fill="#123B7A"/>
+<text x="270" y="153" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">space-between</text>
+<rect x="270" y="160" width="220" height="76" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="278.0" y="168.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<rect x="365.0" y="168.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<rect x="452.0" y="168.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<text x="10" y="283" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">space-around</text>
+<rect x="10" y="290" width="220" height="76" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="37.0" y="298.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<rect x="105.0" y="298.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<rect x="173.0" y="298.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<text x="270" y="283" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">space-evenly</text>
+<rect x="270" y="290" width="220" height="76" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="306.5" y="298.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<rect x="365.0" y="298.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+<rect x="423.5" y="298.0" width="30.0" height="60.0" rx="3" fill="#C8AD55"/>
+</svg>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: justify-content</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento"&gt;A&lt;/div&gt;
+  &lt;div class="elemento"&gt;B&lt;/div&gt;
+  &lt;div class="elemento"&gt;C&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #eef1f5;
+  padding: 10px;
+  height: 90px;
+}
+
+.elemento {
+  background-color: #C8AD55;
+  color: #2B2B2B;
+  padding: 18px;
+  text-align: center;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Sustituya el valor de <code>justify-content</code> por
+          <code>center</code>, <code>space-between</code>,
+          <code>space-around</code> y <code>space-evenly</code>, en ese orden, y
+          observe la diferencia entre cada uno.
+        </p>
+
+        <h3>Alineación en el eje transversal</h3>
+        <p>
+          La propiedad <code>align-items</code> alinea los elementos a lo largo del
+          eje transversal; puede entenderse como el equivalente de
+          <code>justify-content</code> para dicho eje. Admite los valores
+          <code>stretch</code>, <code>flex-start</code>, <code>flex-end</code>,
+          <code>center</code> y <code>baseline</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 530 294" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Variantes de align-items">
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">flex-start</text>
+<rect x="10" y="30" width="150" height="100" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="22.0" y="40.0" width="32.0" height="30.0" rx="3" fill="#123B7A"/>
+<rect x="62.0" y="40.0" width="32.0" height="55.0" rx="3" fill="#123B7A"/>
+<rect x="102.0" y="40.0" width="32.0" height="40.0" rx="3" fill="#123B7A"/>
+<text x="190" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">flex-end</text>
+<rect x="190" y="30" width="150" height="100" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="202.0" y="90.0" width="32.0" height="30.0" rx="3" fill="#123B7A"/>
+<rect x="242.0" y="65.0" width="32.0" height="55.0" rx="3" fill="#123B7A"/>
+<rect x="282.0" y="80.0" width="32.0" height="40.0" rx="3" fill="#123B7A"/>
+<text x="370" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">center</text>
+<rect x="370" y="30" width="150" height="100" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="382.0" y="65.0" width="32.0" height="30.0" rx="3" fill="#123B7A"/>
+<rect x="422.0" y="52.5" width="32.0" height="55.0" rx="3" fill="#123B7A"/>
+<rect x="462.0" y="60.0" width="32.0" height="40.0" rx="3" fill="#123B7A"/>
+<text x="10" y="177" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">stretch</text>
+<rect x="10" y="184" width="150" height="100" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="22.0" y="194.0" width="32.0" height="80.0" rx="3" fill="#123B7A"/>
+<rect x="62.0" y="194.0" width="32.0" height="80.0" rx="3" fill="#123B7A"/>
+<rect x="102.0" y="194.0" width="32.0" height="80.0" rx="3" fill="#123B7A"/>
+<text x="190" y="177" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">baseline</text>
+<rect x="190" y="184" width="150" height="100" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="202.0" y="230.0" width="32.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="242.0" y="218.0" width="32.0" height="60.0" rx="3" fill="#123B7A"/>
+<rect x="282.0" y="225.2" width="32.0" height="48.0" rx="3" fill="#123B7A"/>
+<line x1="198" y1="236" x2="332" y2="236" stroke="#C8AD55" stroke-width="1.5" stroke-dasharray="3,3"/>
+</svg>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: align-items</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento"&gt;1&lt;/div&gt;
+  &lt;div class="elemento"&gt;2&lt;/div&gt;
+  &lt;div class="elemento"&gt;3&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  align-items: stretch;
+  background-color: #eef1f5;
+  padding: 10px;
+  height: 150px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 14px;
+  width: 70px;
+  text-align: center;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Sustituya <code>align-items</code> por <code>flex-start</code>,
+          <code>flex-end</code> y <code>center</code>, y observe que, a diferencia
+          de <code>stretch</code>, los elementos dejan de ocupar toda la altura del
+          contenedor.
+        </p>
+
+        <h3>Alineación de líneas múltiples</h3>
+        <p>
+          La propiedad <code>align-content</code> alinea las líneas de un
+          contenedor flexible cuando existe espacio adicional en el eje transversal.
+          Solo produce un efecto visible cuando hay más de una línea de elementos, es
+          decir, cuando <code>flex-wrap</code> tiene el valor <code>wrap</code>.
+          Admite los mismos valores que <code>justify-content</code>, además de
+          <code>stretch</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 530 314" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Variantes de align-content">
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">flex-start</text>
+<rect x="10" y="30" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="22.0" y="38.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="56.0" y="38.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="90.0" y="38.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="22.0" y="66.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="56.0" y="66.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="90.0" y="66.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<text x="190" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">flex-end</text>
+<rect x="190" y="30" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="202.0" y="82.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="236.0" y="82.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="270.0" y="82.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="202.0" y="110.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="236.0" y="110.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="270.0" y="110.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<text x="370" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">center</text>
+<rect x="370" y="30" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="382.0" y="60.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="416.0" y="60.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="450.0" y="60.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="382.0" y="88.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="416.0" y="88.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<rect x="450.0" y="88.0" width="28.0" height="22.0" rx="3" fill="#123B7A"/>
+<text x="10" y="187" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">space-between</text>
+<rect x="10" y="194" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="22.0" y="202.0" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="56.0" y="202.0" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="90.0" y="202.0" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="22.0" y="274.0" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="56.0" y="274.0" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="90.0" y="274.0" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<text x="190" y="187" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">space-around</text>
+<rect x="190" y="194" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="202.0" y="214.5" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="236.0" y="214.5" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="270.0" y="214.5" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="202.0" y="261.5" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="236.0" y="261.5" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<rect x="270.0" y="261.5" width="28.0" height="22.0" rx="3" fill="#C8AD55"/>
+<text x="370" y="187" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">stretch</text>
+<rect x="370" y="194" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="382.0" y="202.0" width="28.0" height="44.0" rx="3" fill="#123B7A"/>
+<rect x="416.0" y="202.0" width="28.0" height="44.0" rx="3" fill="#123B7A"/>
+<rect x="450.0" y="202.0" width="28.0" height="44.0" rx="3" fill="#123B7A"/>
+<rect x="382.0" y="252.0" width="28.0" height="44.0" rx="3" fill="#123B7A"/>
+<rect x="416.0" y="252.0" width="28.0" height="44.0" rx="3" fill="#123B7A"/>
+<rect x="450.0" y="252.0" width="28.0" height="44.0" rx="3" fill="#123B7A"/>
+</svg>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: align-content</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento"&gt;1&lt;/div&gt;
+  &lt;div class="elemento"&gt;2&lt;/div&gt;
+  &lt;div class="elemento"&gt;3&lt;/div&gt;
+  &lt;div class="elemento"&gt;4&lt;/div&gt;
+  &lt;div class="elemento"&gt;5&lt;/div&gt;
+  &lt;div class="elemento"&gt;6&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  background-color: #eef1f5;
+  padding: 10px;
+  width: 260px;
+  height: 230px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 14px;
+  margin: 4px;
+  width: 60px;
+  text-align: center;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Sustituya <code>align-content</code> por <code>space-between</code> y por
+          <code>center</code>, y observe cómo se reparten las líneas dentro de la
+          altura disponible del contenedor.
+        </p>
+
+        <h3>Espaciado entre elementos</h3>
+        <p>
+          La propiedad <code>gap</code> define el espacio entre elementos dentro de
+          un contenedor flexible, sin necesidad de aplicar márgenes individuales a
+          cada uno. Puede establecerse un solo valor para ambas direcciones, o bien
+          valores independientes mediante <code>row-gap</code> y
+          <code>column-gap</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 620 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Efecto de distintos valores de gap">
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">gap: 8px</text>
+<rect x="10" y="30" width="180" height="70" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="22.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="64.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="106.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<text x="220" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">gap: 20px</text>
+<rect x="220" y="30" width="180" height="70" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="232.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="286.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="340.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<text x="430" y="23" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#123B7A">gap: 36px</text>
+<rect x="430" y="30" width="180" height="70" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="442.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="512.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="582.0" y="45.0" width="34.0" height="40.0" rx="3" fill="#123B7A"/>
+</svg>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: gap</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento"&gt;1&lt;/div&gt;
+  &lt;div class="elemento"&gt;2&lt;/div&gt;
+  &lt;div class="elemento"&gt;3&lt;/div&gt;
+  &lt;div class="elemento"&gt;4&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: #eef1f5;
+  padding: 10px;
+  width: 260px;
+}
+
+.elemento {
+  background-color: #C8AD55;
+  color: #2B2B2B;
+  padding: 14px;
+  width: 70px;
+  text-align: center;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Sustituya <code>gap</code> por <code>row-gap: 5px;</code> y
+          <code>column-gap: 30px;</code> por separado, y observe que cada uno
+          controla una dirección distinta del espaciado.
+        </p>
+
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Propiedad</th>
+              <th>Valores principales</th>
+              <th>Efecto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>display</code></td>
+              <td><code>flex</code>, <code>inline-flex</code></td>
+              <td>Convierte el elemento en contenedor flexible y a sus hijos directos en elementos flexibles</td>
+            </tr>
+            <tr>
+              <td><code>flex-direction</code></td>
+              <td><code>row</code>, <code>row-reverse</code>, <code>column</code>, <code>column-reverse</code></td>
+              <td>Define la dirección del eje principal</td>
+            </tr>
+            <tr>
+              <td><code>flex-wrap</code></td>
+              <td><code>nowrap</code>, <code>wrap</code>, <code>wrap-reverse</code></td>
+              <td>Permite que los elementos se distribuyan en más de una línea</td>
+            </tr>
+            <tr>
+              <td><code>justify-content</code></td>
+              <td><code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>, <code>space-evenly</code></td>
+              <td>Distribuye el espacio sobrante a lo largo del eje principal</td>
+            </tr>
+            <tr>
+              <td><code>align-items</code></td>
+              <td><code>stretch</code>, <code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>baseline</code></td>
+              <td>Alinea los elementos a lo largo del eje transversal</td>
+            </tr>
+            <tr>
+              <td><code>align-content</code></td>
+              <td><code>flex-start</code>, <code>flex-end</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>, <code>stretch</code></td>
+              <td>Alinea las líneas del contenedor cuando hay más de una</td>
+            </tr>
+            <tr>
+              <td><code>gap</code></td>
+              <td>valor de longitud, por ejemplo <code>20px</code></td>
+              <td>Define el espacio entre elementos, sin usar márgenes individuales</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Propiedades de los elementos flexibles</h2>
+        <p>
+          A diferencia de las propiedades anteriores, las que se describen en esta
+          sección se aplican directamente sobre cada elemento flexible, y permiten
+          modificar su comportamiento de manera individual.
+        </p>
+
+        <h3>Capacidad de crecimiento y reducción</h3>
+        <p>
+          La propiedad <code>flex-grow</code> define si un elemento puede crecer
+          para ocupar el espacio sobrante del contenedor. Acepta un número sin
+          unidad que actúa como proporción: si todos los elementos tienen el mismo
+          valor, el espacio se reparte de manera equitativa; si uno de ellos tiene un
+          valor mayor, ocupará una porción proporcionalmente mayor. De manera
+          análoga, <code>flex-shrink</code> define la capacidad de un elemento para
+          reducirse cuando no hay espacio suficiente, y <code>flex-basis</code>
+          establece su tamaño inicial antes de repartir el espacio restante. Estas
+          tres propiedades pueden combinarse mediante la abreviatura
+          <code>flex</code>, con la sintaxis <code>flex: grow shrink basis;</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 570 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparación de flex-grow entre elementos">
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#123B7A">flex-grow: 1 / 1 / 1</text>
+<rect x="10" y="30" width="260" height="60" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="18.0" y="44.0" width="74.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="55.3" y="64.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">1</text>
+<rect x="100.7" y="44.0" width="74.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="138.0" y="64.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">1</text>
+<rect x="183.3" y="44.0" width="74.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="220.7" y="64.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">1</text>
+<text x="300" y="23" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#123B7A">flex-grow: 1 / 2 / 1</text>
+<rect x="300" y="30" width="260" height="60" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="308.0" y="44.0" width="56.0" height="32.0" rx="3" fill="#123B7A"/>
+<text x="336.0" y="64.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">1</text>
+<rect x="372.0" y="44.0" width="112.0" height="32.0" rx="3" fill="#C8AD55"/>
+<text x="428.0" y="64.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">2</text>
+<rect x="492.0" y="44.0" width="56.0" height="32.0" rx="3" fill="#123B7A"/>
+<text x="520.0" y="64.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">1</text>
+</svg>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: flex-grow</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento uno"&gt;1&lt;/div&gt;
+  &lt;div class="elemento dos"&gt;2&lt;/div&gt;
+  &lt;div class="elemento tres"&gt;3&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  background-color: #eef1f5;
+  padding: 10px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 20px;
+  margin: 5px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.uno {
+  flex-grow: 1;
+}
+
+.dos {
+  flex-grow: 2;
+}
+
+.tres {
+  flex-grow: 1;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Modifique los valores de <code>flex-grow</code> de cada elemento y observe
+          que el espacio disponible se reparte en proporción a dichos valores.
+        </p>
+
+        <p>
+          Mientras <code>flex-grow</code> actúa cuando hay espacio disponible,
+          <code>flex-shrink</code> actúa en el caso contrario: define en qué
+          proporción se reduce cada elemento cuando la suma de sus tamaños base
+          supera el ancho del contenedor. Dicho tamaño base se establece mediante
+          <code>flex-basis</code>, que puede expresarse en unidades absolutas o en
+          porcentaje.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: flex-shrink y flex-basis</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento uno"&gt;1&lt;/div&gt;
+  &lt;div class="elemento dos"&gt;2&lt;/div&gt;
+  &lt;div class="elemento tres"&gt;3&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  width: 300px;
+  background-color: #eef1f5;
+  padding: 10px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 20px;
+  margin: 5px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.uno {
+  flex-basis: 150px;
+  flex-shrink: 1;
+}
+
+.dos {
+  flex-basis: 150px;
+  flex-shrink: 2;
+}
+
+.tres {
+  flex-basis: 150px;
+  flex-shrink: 1;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          La suma de los valores de <code>flex-basis</code> supera el ancho del
+          contenedor, de modo que los tres elementos se reducen. El elemento con
+          <code>flex-shrink: 2</code> se reduce el doble que los otros dos. Cambie
+          los tres valores de <code>flex-shrink</code> a <code>0</code> y observe
+          que ningún elemento se reduce, aun cuando ya no quepan dentro del
+          contenedor.
+        </p>
+
+        <h3>Alineación individual</h3>
+        <p>
+          La propiedad <code>align-self</code> permite anular, únicamente para un
+          elemento en particular, la alineación que <code>align-items</code>
+          estableció para todo el contenedor. Admite los mismos valores que
+          <code>align-items</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 440 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Elemento con align-self distinto al resto">
+<defs><marker id="punta3" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto"><path d="M0,7 L3.5,0 L7,7 Z" fill="#C8AD55"/></marker></defs>
+<text x="10" y="23" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#123B7A">align-items: flex-start (contenedor) / align-self: flex-end (un elemento)</text>
+<rect x="10" y="30" width="420" height="130" rx="6" fill="#F3F4F6" stroke="#123B7A" stroke-width="1.5"/>
+<rect x="30.0" y="42.0" width="46.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="94.0" y="42.0" width="46.0" height="40.0" rx="3" fill="#123B7A"/>
+<rect x="158.0" y="108.0" width="46.0" height="40.0" rx="3" fill="#C8AD55"/>
+<text x="181.0" y="188.0" font-family="IBM Plex Sans, sans-serif" font-size="12" fill="#C8AD55" text-anchor="middle">align-self: flex-end</text>
+<path d="M 181.0,178 L 181.0,152" stroke="#C8AD55" stroke-width="1.5" fill="none" marker-end="url(#punta3)"/>
+</svg>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: align-self</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento"&gt;1&lt;/div&gt;
+  &lt;div class="elemento destacado"&gt;2&lt;/div&gt;
+  &lt;div class="elemento"&gt;3&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  align-items: flex-start;
+  background-color: #eef1f5;
+  padding: 10px;
+  height: 150px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 14px;
+  width: 70px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.destacado {
+  align-self: center;
+  background-color: #C8AD55;
+  color: #2B2B2B;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Modifique el valor de <code>align-self</code> del elemento central y
+          observe que el cambio no afecta a los demás elementos del contenedor.
+        </p>
+
+        <h3>Orden de presentación</h3>
+        <p>
+          La propiedad <code>order</code> modifica el orden visual en el que se
+          presentan los elementos, con independencia del orden en el que aparecen en
+          el documento HTML. Todos los elementos tienen, por defecto, un valor de
+          <code>0</code>; asignar un valor distinto a un solo elemento lo desplaza
+          respecto de los demás, y la propiedad admite valores negativos.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: order</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenedor"&gt;
+  &lt;div class="elemento primero"&gt;primero&lt;/div&gt;
+  &lt;div class="elemento segundo"&gt;segundo&lt;/div&gt;
+  &lt;div class="elemento tercero"&gt;tercero&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contenedor {
+  display: flex;
+  background-color: #eef1f5;
+  padding: 10px;
+}
+
+.elemento {
+  background-color: #123B7A;
+  color: white;
+  padding: 18px;
+  margin: 5px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.primero {
+  order: 3;
+}
+
+.segundo {
+  order: 1;
+}
+
+.tercero {
+  order: 2;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          El elemento marcado como "primero" en el HTML aparece al final del
+          resultado, debido a su valor de <code>order</code>. Modifique los tres
+          valores para obtener un orden distinto.
+        </p>
+      </section>
+
+      <section>
+        <h2>Aplicaciones frecuentes</h2>
+        <p>
+          Flexbox se utiliza con frecuencia para construir patrones de interfaz que
+          aparecen en la mayoría de los sitios web, entre ellos barras de
+          navegación y distribuciones de tarjetas.
+        </p>
+
+        <h3>Barra de navegación</h3>
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: barra de navegación</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;nav class="barra"&gt;
+  &lt;span class="marca"&gt;Sitio web&lt;/span&gt;
+  &lt;div class="enlaces"&gt;
+    &lt;a href="#"&gt;Inicio&lt;/a&gt;
+    &lt;a href="#"&gt;Servicios&lt;/a&gt;
+    &lt;a href="#"&gt;Contacto&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #123B7A;
+  padding: 14px 20px;
+  font-family: sans-serif;
+}
+
+.marca {
+  color: white;
+  font-weight: 600;
+}
+
+.enlaces {
+  display: flex;
+  gap: 18px;
+}
+
+.enlaces a {
+  color: white;
+  text-decoration: none;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Este patrón combina <code>justify-content: space-between</code>, para
+          separar la marca de los enlaces, con <code>align-items: center</code>,
+          para alinearlos verticalmente. Modifique ambos valores y observe el efecto
+          sobre la distribución de la barra.
+        </p>
+
+        <h3>Distribución de tarjetas</h3>
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: fila de tarjetas</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="fila-tarjetas"&gt;
+  &lt;div class="tarjeta"&gt;
+    &lt;h4&gt;Tarjeta 1&lt;/h4&gt;
+    &lt;p&gt;Contenido breve.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="tarjeta"&gt;
+    &lt;h4&gt;Tarjeta 2&lt;/h4&gt;
+    &lt;p&gt;Un párrafo un poco más largo, para observar el efecto de stretch.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="tarjeta"&gt;
+    &lt;h4&gt;Tarjeta 3&lt;/h4&gt;
+    &lt;p&gt;Contenido breve.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.fila-tarjetas {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  padding: 10px;
+  font-family: sans-serif;
+}
+
+.tarjeta {
+  flex: 1;
+  border: 1px solid #d9dce2;
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.tarjeta h4 {
+  margin: 0 0 8px 0;
+  color: #123B7A;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie <code>align-items</code> a <code>flex-start</code> y observe que
+          las tarjetas dejan de tener la misma altura. Cambie <code>flex: 1</code>
+          por <code>flex: 0</code> en la clase <code>.tarjeta</code> y observe que
+          cada tarjeta vuelve a ocupar solo el ancho de su contenido.
+        </p>
+      </section>
+
+      <section>
+        <h2>Recursos externos</h2>
+        <ul class="lista-recursos">
+          <li>
+            <a href="https://tools.simonwillison.net/flexbox-playground" target="_blank" rel="noopener">Flexbox Playground</a>
+            <span class="descripcion">Editor en línea para experimentar con las propiedades de Flexbox sobre una estructura ya construida.</span>
+          </li>
+          <li>
+            <a href="https://flexboxfroggy.com/#es" target="_blank" rel="noopener">Flexbox Froggy</a>
+            <span class="descripcion">Ejercicios progresivos que utilizan propiedades de Flexbox para resolver un problema de posicionamiento en cada nivel.</span>
+          </li>
+          <li>
+            <a href="https://flexboxlabs.netlify.app/flexbox" target="_blank" rel="noopener">Flexboxlabs</a>
+            <span class="descripcion">Referencia visual e interactiva de las propiedades del contenedor y de los elementos flexibles.</span>
+          </li>
+        </ul>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/xml-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/html-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/css-hint.min.js"></script>
+  <script src="js/playground.js"></script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+/*
+  Hoja de estilos compartida — Desarrollo Web I, Unidad II
+  Este archivo es utilizado por todas las páginas de la unidad.
+  Al incorporar un nuevo tema, basta con enlazar este mismo archivo
+  para mantener una apariencia consistente.
+*/
+
+:root {
+  --azul-esen: #123B7A;
+  --azul-esen-oscuro: #0d2c5c;
+  --dorado-esen: #C8AD55;
+  --blanco: #FFFFFF;
+  --gris-claro: #F3F4F6;
+  --gris-medio: #d9dce2;
+  --gris-oscuro: #2B2B2B;
+
+  --fuente-titulos: "Source Serif 4", "Georgia", serif;
+  --fuente-cuerpo: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --fuente-codigo: "IBM Plex Mono", "Consolas", monospace;
+
+  --ancho-barra-lateral: 280px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fuente-cuerpo);
+  color: var(--gris-oscuro);
+  background-color: var(--blanco);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--fuente-titulos);
+  color: var(--azul-esen);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+a {
+  color: var(--azul-esen);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  max-width: 72ch;
+}
+
+code {
+  font-family: var(--fuente-codigo);
+  background-color: var(--gris-claro);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.92em;
+}
+
+/* Encabezado institucional */
+
+.masthead {
+  background-color: var(--azul-esen);
+  color: var(--blanco);
+  padding: 1.1rem 2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.masthead .sigla {
+  font-family: var(--fuente-titulos);
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+}
+
+.masthead .curso {
+  font-size: 0.98rem;
+  opacity: 0.92;
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  padding-left: 0.9rem;
+}
+
+.masthead .unidad {
+  font-size: 0.9rem;
+  color: var(--dorado-esen);
+  margin-left: auto;
+}
+
+/* Estructura de dos columnas */
+
+.estructura {
+  display: grid;
+  grid-template-columns: var(--ancho-barra-lateral) 1fr;
+  min-height: calc(100vh - 64px);
+}
+
+/* Navegación lateral */
+
+.navegacion-tema {
+  background-color: var(--gris-claro);
+  border-right: 1px solid var(--gris-medio);
+  padding: 2rem 1.5rem;
+}
+
+.navegacion-tema h2 {
+  font-size: 0.78rem;
+  font-family: var(--fuente-cuerpo);
+  text-transform: none;
+  color: var(--gris-oscuro);
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.lista-temas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.lista-temas li {
+  border-left: 3px solid transparent;
+}
+
+.lista-temas a {
+  display: block;
+  padding: 0.55rem 0.7rem;
+  color: var(--gris-oscuro);
+  font-size: 0.95rem;
+}
+
+.lista-temas a:hover {
+  background-color: var(--blanco);
+  text-decoration: none;
+}
+
+.lista-temas li.activo {
+  border-left-color: var(--dorado-esen);
+  background-color: var(--blanco);
+}
+
+.lista-temas li.activo a {
+  color: var(--azul-esen);
+  font-weight: 600;
+}
+
+.lista-temas li.pendiente a {
+  color: #8a8f98;
+  cursor: default;
+}
+
+.lista-temas li.pendiente a:hover {
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.lista-temas .nota-pendiente {
+  display: block;
+  font-size: 0.72rem;
+  color: #9aa0a8;
+  padding: 0 0.7rem 0.45rem 0.7rem;
+  font-style: italic;
+}
+
+/* Contenido principal */
+
+.contenido {
+  padding: 2.5rem 3rem 4rem 3rem;
+  max-width: 1000px;
+}
+
+.contenido > header {
+  margin-bottom: 2rem;
+}
+
+.contenido > header h1 {
+  font-size: 2.1rem;
+  margin: 0 0 0.4rem 0;
+}
+
+.contenido > header .subtitulo {
+  color: #55606e;
+  font-size: 1.02rem;
+}
+
+.contenido section {
+  margin-bottom: 2.6rem;
+}
+
+.contenido section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--gris-medio);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.contenido section h3 {
+  font-size: 1.08rem;
+  margin-top: 1.6rem;
+}
+
+.contenido ol, .contenido ul {
+  max-width: 72ch;
+  padding-left: 1.4rem;
+}
+
+.contenido li {
+  margin-bottom: 0.35rem;
+}
+
+.nota-instruccion {
+  font-size: 0.94rem;
+  color: #45505d;
+  border-left: 3px solid var(--dorado-esen);
+  padding-left: 0.9rem;
+  margin: 0.9rem 0 1.2rem 0;
+}
+
+/* Componente de ejemplo interactivo (playground) */
+
+.playground {
+  border: 1px solid var(--gris-medio);
+  border-radius: 6px;
+  margin: 1.2rem 0 1.8rem 0;
+  overflow: hidden;
+}
+
+.playground .titulo-playground {
+  background-color: var(--gris-claro);
+  padding: 0.55rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--azul-esen);
+  border-bottom: 1px solid var(--gris-medio);
+}
+
+.paneles-editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #1e1e1e;
+}
+
+.panel-editor {
+  border-right: 1px solid #333;
+}
+
+.panel-editor:last-child {
+  border-right: none;
+}
+
+.panel-editor .etiqueta {
+  font-family: var(--fuente-codigo);
+  font-size: 0.75rem;
+  color: #9aa0a8;
+  padding: 0.4rem 0.7rem 0;
+  background-color: #1e1e1e;
+}
+
+.panel-editor .CodeMirror {
+  height: 190px;
+  font-family: var(--fuente-codigo);
+  font-size: 0.85rem;
+}
+
+.panel-vista {
+  border-top: 1px solid var(--gris-medio);
+}
+
+.panel-vista .etiqueta {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.75rem;
+  color: #55606e;
+  padding: 0.4rem 0.9rem 0;
+  background-color: var(--gris-claro);
+}
+
+.vista-previa {
+  width: 100%;
+  height: 160px;
+  border: none;
+  display: block;
+  background-color: var(--blanco);
+}
+
+.controles-playground {
+  padding: 0.55rem 0.9rem;
+  background-color: var(--gris-claro);
+  border-top: 1px solid var(--gris-medio);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-reiniciar {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.82rem;
+  color: var(--azul-esen);
+  background-color: var(--blanco);
+  border: 1px solid var(--gris-medio);
+  border-radius: 4px;
+  padding: 0.35rem 0.8rem;
+  cursor: pointer;
+}
+
+.btn-reiniciar:hover {
+  border-color: var(--azul-esen);
+}
+
+/* Tabla de referencia de propiedades */
+
+.tabla-referencia {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin: 1rem 0 1.6rem 0;
+}
+
+.tabla-referencia th,
+.tabla-referencia td {
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--gris-medio);
+  vertical-align: top;
+}
+
+.tabla-referencia th {
+  color: var(--azul-esen);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.tabla-referencia code {
+  white-space: nowrap;
+}
+
+/* Recursos externos */
+
+.lista-recursos {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-recursos li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--gris-medio);
+}
+
+.lista-recursos .descripcion {
+  display: block;
+  color: #55606e;
+  font-size: 0.9rem;
+}
+
+/* Diagramas de referencia */
+
+.diagrama-ejes,
+.diagrama-concepto {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.9rem 0 1.5rem 0;
+}
+
+.diagrama-ejes {
+  max-width: 560px;
+}
+
+/* Menú de autocompletado del editor */
+
+.CodeMirror-hints {
+  font-family: var(--fuente-codigo);
+  font-size: 0.82rem;
+  border: 1px solid var(--gris-medio);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.CodeMirror-hint {
+  padding: 3px 10px;
+}
+
+li.CodeMirror-hint-active {
+  background-color: var(--azul-esen);
+  color: var(--blanco);
+}
+
+/* Responsivo */
+
+@media (max-width: 860px) {
+  .estructura {
+    grid-template-columns: 1fr;
+  }
+
+  .navegacion-tema {
+    border-right: none;
+    border-bottom: 1px solid var(--gris-medio);
+  }
+
+  .contenido {
+    padding: 2rem 1.3rem 3rem 1.3rem;
+  }
+
+  .paneles-editor {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-editor {
+    border-right: none;
+    border-bottom: 1px solid #333;
+  }
+}
