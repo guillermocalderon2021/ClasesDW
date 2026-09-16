@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posicionamiento y visualización | Desarrollo Web I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/monokai.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.css">
+</head>
+<body>
+
+  <header class="masthead">
+    <span class="sigla">ESEN</span>
+    <span class="curso">Desarrollo Web I</span>
+    <span class="unidad">Unidad II — Maquetación y diseño web responsivo</span>
+  </header>
+
+  <div class="estructura">
+
+    <nav class="navegacion-tema">
+      <h2>Temas de la unidad</h2>
+      <ul class="lista-temas">
+        <li>
+          <a href="flexbox.html">Flexbox</a>
+        </li>
+        <li class="activo">
+          <a href="posicionamiento-visualizacion.html">Posicionamiento y visualización</a>
+        </li>
+        <li class="pendiente">
+          <a href="#">CSS Grid</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Diseño web responsivo</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Media queries y contenido responsivo</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Sistema de malla de Bootstrap</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+        <li class="pendiente">
+          <a href="#">Utilidades y componentes de Bootstrap</a>
+          <span class="nota-pendiente">Contenido en preparación</span>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="contenido">
+      <header>
+        <h1>Posicionamiento y visualización</h1>
+        <p class="subtitulo">Unidad II — Desarrollo Web I</p>
+      </header>
+
+      <section>
+        <h2>Modelo de formato visual</h2>
+        <p>
+          El navegador representa los elementos de un documento HTML mediante cajas.
+          El modelo de caja determina las dimensiones de cada elemento y el modelo de
+          formato visual determina cómo esas cajas se distribuyen dentro del documento.
+        </p>
+        <p>
+          Para calcular la posición y el tamaño final de una caja, el navegador toma en
+          cuenta varios factores.
+        </p>
+        <ol>
+          <li>Las dimensiones de la caja, entre ellas <code>width</code> y <code>height</code>.</li>
+          <li>El tipo de visualización establecido mediante <code>display</code>.</li>
+          <li>El esquema de posicionamiento definido mediante <code>position</code>.</li>
+          <li>La relación de la caja con sus elementos padre, hijos y hermanos.</li>
+          <li>El espacio disponible en su contenedor y en el viewport.</li>
+        </ol>
+        <p>
+          Esta clase estudia el flujo normal, los esquemas de posicionamiento y las
+          propiedades <code>display</code>, <code>visibility</code>,
+          <code>overflow</code> y <code>z-index</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Flujo normal del documento</h2>
+        <p>
+          Si no se aplican reglas que alteren su distribución, los elementos participan
+          en el flujo normal. Los elementos con comportamiento de bloque se colocan uno
+          debajo de otro y, por defecto, ocupan el ancho disponible de su contenedor.
+          Los elementos con comportamiento en línea participan en la misma línea de
+          texto y ocupan el espacio necesario para su contenido.
+        </p>
+        <p>
+          Etiquetas como <code>div</code>, <code>section</code>, <code>article</code>,
+          <code>p</code> y los encabezados suelen tener <code>display: block</code> en
+          la hoja de estilos del navegador. Etiquetas como <code>a</code>,
+          <code>span</code>, <code>strong</code> y <code>em</code> suelen tener
+          <code>display: inline</code>. Estos valores iniciales pueden modificarse con
+          CSS.
+        </p>
+
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>Comportamiento principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>block</code></td>
+              <td>La caja participa como bloque y normalmente comienza en una nueva línea.</td>
+            </tr>
+            <tr>
+              <td><code>inline</code></td>
+              <td>La caja participa dentro de una línea. <code>width</code> y <code>height</code> no controlan su tamaño de la misma forma que en una caja de bloque.</td>
+            </tr>
+            <tr>
+              <td><code>inline-block</code></td>
+              <td>La caja participa en línea, pero admite dimensiones explícitas y márgenes verticales como una caja de bloque.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: block, inline e inline-block</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="bloque"&gt;Caja A&lt;/div&gt;
+&lt;div class="bloque"&gt;Caja B&lt;/div&gt;
+
+&lt;span class="linea"&gt;Elemento 1&lt;/span&gt;
+&lt;span class="linea"&gt;Elemento 2&lt;/span&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">body {
+  font-family: sans-serif;
+}
+
+.bloque {
+  display: block;
+  background-color: #dfe8f5;
+  margin: 6px 0;
+  padding: 10px;
+}
+
+.linea {
+  display: inline;
+  background-color: #efe8d1;
+  width: 150px;
+  height: 60px;
+  padding: 6px;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie <code>display: inline</code> por <code>display: inline-block</code>
+          en la clase <code>.linea</code>. Observe el efecto de <code>width</code> y
+          <code>height</code> después del cambio.
+        </p>
+      </section>
+
+      <section>
+        <h2>La propiedad position</h2>
+        <p>
+          La propiedad <code>position</code> establece el esquema de posicionamiento de
+          una caja. Sus valores más relevantes son <code>static</code>,
+          <code>relative</code>, <code>absolute</code>, <code>fixed</code> y
+          <code>sticky</code>.
+        </p>
+
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>Efecto</th>
+              <th>Participación en el flujo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>static</code></td>
+              <td>Usa el posicionamiento normal.</td>
+              <td>Permanece en el flujo normal.</td>
+            </tr>
+            <tr>
+              <td><code>relative</code></td>
+              <td>Permite desplazar la caja respecto de su posición normal.</td>
+              <td>Conserva su espacio original en el flujo.</td>
+            </tr>
+            <tr>
+              <td><code>absolute</code></td>
+              <td>Posiciona la caja respecto de su bloque contenedor.</td>
+              <td>Sale del flujo normal.</td>
+            </tr>
+            <tr>
+              <td><code>fixed</code></td>
+              <td>Fija la caja respecto del viewport en los casos habituales.</td>
+              <td>Sale del flujo normal.</td>
+            </tr>
+            <tr>
+              <td><code>sticky</code></td>
+              <td>Combina el comportamiento normal con una fijación temporal al alcanzar un umbral.</td>
+              <td>Conserva su espacio en el flujo.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Posicionamiento estático</h3>
+        <p>
+          <code>position: static</code> es el valor inicial. La caja permanece en el
+          flujo normal y las propiedades <code>top</code>, <code>right</code>,
+          <code>bottom</code> y <code>left</code> no se utilizan para desplazarla.
+        </p>
+        <p>
+          La propiedad <code>float</code> no es un valor de <code>position</code>. Se
+          utiliza principalmente cuando se necesita que contenido en línea rodee una
+          caja. Para la distribución general de componentes se utilizan Flexbox y Grid.
+        </p>
+      </section>
+
+      <section>
+        <h2>Propiedades de desplazamiento</h2>
+        <p>
+          Las propiedades <code>top</code>, <code>right</code>, <code>bottom</code> y
+          <code>left</code> indican desplazamientos o límites según el esquema de
+          posicionamiento aplicado. La propiedad abreviada <code>inset</code> permite
+          definir estos cuatro valores de forma conjunta.
+        </p>
+
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Propiedad</th>
+              <th>Referencia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>top</code></td>
+              <td>Borde superior del área de referencia.</td>
+            </tr>
+            <tr>
+              <td><code>right</code></td>
+              <td>Borde derecho del área de referencia.</td>
+            </tr>
+            <tr>
+              <td><code>bottom</code></td>
+              <td>Borde inferior del área de referencia.</td>
+            </tr>
+            <tr>
+              <td><code>left</code></td>
+              <td>Borde izquierdo del área de referencia.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Estas propiedades no tienen un efecto útil sobre una caja con
+          <code>position: static</code>. Su interpretación cambia con
+          <code>relative</code>, <code>absolute</code>, <code>fixed</code> y
+          <code>sticky</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Posicionamiento relativo</h2>
+        <p>
+          Con <code>position: relative</code> la caja se coloca primero en su posición
+          normal. Después puede desplazarse visualmente mediante las propiedades de
+          desplazamiento. El espacio que ocupaba originalmente se conserva, por lo que
+          los elementos adyacentes no se redistribuyen para ocuparlo.
+        </p>
+        <p>
+          Un desplazamiento con <code>top: 20px</code> mueve la caja 20 píxeles hacia
+          abajo. Un desplazamiento con <code>left: 30px</code> la mueve 30 píxeles hacia
+          la derecha. Los valores negativos invierten la dirección del desplazamiento.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: desplazamiento relativo y conservación del espacio</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="fila"&gt;
+  &lt;div class="caja"&gt;1&lt;/div&gt;
+  &lt;div class="caja desplazada"&gt;2&lt;/div&gt;
+  &lt;div class="caja"&gt;3&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.fila {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.caja {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dfe8f5;
+  border: 1px solid #123B7A;
+}
+
+.desplazada {
+  position: relative;
+  top: 25px;
+  left: 20px;
+  background-color: #efe8d1;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 190px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie <code>top</code> y <code>left</code> a cero. Después pruebe valores
+          negativos. Observe que las cajas 1 y 3 conservan sus posiciones.
+        </p>
+      </section>
+
+      <section>
+        <h2>Posicionamiento absoluto</h2>
+        <p>
+          Una caja con <code>position: absolute</code> deja de participar en el flujo
+          normal. Los demás elementos se distribuyen como si esa caja no ocupara un
+          espacio dentro de la secuencia normal del documento.
+        </p>
+        <p>
+          Para interpretar <code>top</code>, <code>right</code>, <code>bottom</code> y
+          <code>left</code>, el navegador determina el bloque contenedor de la caja.
+          En el caso habitual, se utiliza como referencia el ancestro más cercano cuya
+          propiedad <code>position</code> tenga un valor distinto de
+          <code>static</code>. Por esta razón es común asignar
+          <code>position: relative</code> al contenedor y
+          <code>position: absolute</code> al elemento que debe ubicarse dentro de él.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: elemento absoluto dentro de un contenedor posicionado</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="tarjeta"&gt;
+  &lt;span class="etiqueta-nueva"&gt;Nuevo&lt;/span&gt;
+  &lt;h3&gt;Curso de CSS&lt;/h3&gt;
+  &lt;p&gt;La etiqueta se coloca en la esquina de la tarjeta.&lt;/p&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.tarjeta {
+  position: relative;
+  width: 320px;
+  margin: 24px;
+  padding: 24px;
+  border: 1px solid #cfd4dc;
+  font-family: sans-serif;
+}
+
+.tarjeta h3 {
+  margin-top: 0;
+}
+
+.etiqueta-nueva {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #123B7A;
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 210px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Elimine <code>position: relative</code> de <code>.tarjeta</code> y observe el
+          cambio. El elemento absoluto deja de usar la tarjeta como referencia directa
+          para su ubicación.
+        </p>
+      </section>
+
+      <section>
+        <h2>Posicionamiento fijo</h2>
+        <p>
+          Una caja con <code>position: fixed</code> sale del flujo normal. En los casos
+          habituales, sus propiedades de desplazamiento se interpretan respecto del
+          viewport. Por esta razón puede mantenerse visible aunque el usuario desplace
+          el contenido de la página.
+        </p>
+        <p>
+          Este comportamiento se utiliza en controles que deben permanecer accesibles,
+          como botones flotantes o barras de acciones. Debe emplearse con cuidado para
+          evitar que el elemento cubra contenido importante.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: elemento fijo dentro de la vista previa</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="contenido-largo"&gt;
+  &lt;h3&gt;Contenido desplazable&lt;/h3&gt;
+  &lt;p&gt;Desplace esta vista previa hacia abajo.&lt;/p&gt;
+  &lt;p&gt;Bloque de contenido.&lt;/p&gt;
+  &lt;p&gt;Bloque de contenido.&lt;/p&gt;
+  &lt;p&gt;Bloque de contenido.&lt;/p&gt;
+  &lt;p&gt;Bloque de contenido.&lt;/p&gt;
+  &lt;p&gt;Bloque de contenido.&lt;/p&gt;
+&lt;/div&gt;
+&lt;button class="accion"&gt;Ayuda&lt;/button&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">body {
+  min-height: 600px;
+  font-family: sans-serif;
+}
+
+.contenido-largo {
+  width: 70%;
+}
+
+.accion {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  padding: 10px 16px;
+  border: 0;
+  background-color: #123B7A;
+  color: white;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 230px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Posicionamiento sticky</h2>
+        <p>
+          <code>position: sticky</code> conserva la participación de la caja en el
+          flujo normal, pero permite que se mantenga junto a uno de los bordes de su
+          área de desplazamiento cuando alcanza el umbral indicado. Para que el efecto
+          sea visible debe definirse al menos uno de los límites relevantes, por
+          ejemplo <code>top: 0</code>.
+        </p>
+        <p>
+          A diferencia de <code>fixed</code>, un elemento sticky no queda fijado de
+          forma permanente al viewport. Su movimiento está limitado por su contenedor y
+          por el área que produce el desplazamiento.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: encabezado sticky dentro de un contenedor con scroll</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="panel-scroll"&gt;
+  &lt;h3 class="encabezado-sticky"&gt;Sección A&lt;/h3&gt;
+  &lt;p&gt;Contenido de la sección.&lt;/p&gt;
+  &lt;p&gt;Contenido de la sección.&lt;/p&gt;
+  &lt;p&gt;Contenido de la sección.&lt;/p&gt;
+  &lt;p&gt;Contenido de la sección.&lt;/p&gt;
+  &lt;p&gt;Contenido de la sección.&lt;/p&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.panel-scroll {
+  height: 150px;
+  overflow: auto;
+  border: 1px solid #cfd4dc;
+  font-family: sans-serif;
+}
+
+.encabezado-sticky {
+  position: sticky;
+  top: 0;
+  margin: 0;
+  padding: 10px;
+  background-color: #123B7A;
+  color: white;
+}
+
+.panel-scroll p {
+  padding: 0 10px;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 210px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Desplace el contenido de la caja. Después elimine <code>top: 0</code> y
+          compare el comportamiento.
+        </p>
+      </section>
+
+      <section>
+        <h2>La propiedad display</h2>
+        <p>
+          La propiedad <code>display</code> determina el tipo de caja que genera un
+          elemento y cómo participa en el modelo de formato. En esta clase interesan
+          especialmente <code>block</code>, <code>inline</code>,
+          <code>inline-block</code> y <code>none</code>. Flexbox ya introdujo también
+          el valor <code>flex</code>, que transforma el elemento en un contenedor
+          flexible.
+        </p>
+        <p>
+          <code>display: none</code> evita que el elemento genere una caja. Como
+          consecuencia, deja de ocupar espacio y el resto del contenido puede ocupar
+          la zona que antes le correspondía.
+        </p>
+      </section>
+
+      <section>
+        <h2>La propiedad visibility</h2>
+        <p>
+          <code>visibility</code> controla si la caja se dibuja, pero no elimina su
+          participación en la distribución. Con <code>visibility: hidden</code> el
+          elemento no se muestra, aunque el espacio que le corresponde permanece
+          reservado.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: display none y visibility hidden</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="fila-cajas"&gt;
+  &lt;div class="caja-v"&gt;1&lt;/div&gt;
+  &lt;div class="caja-v ocultar"&gt;2&lt;/div&gt;
+  &lt;div class="caja-v"&gt;3&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.fila-cajas {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.caja-v {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dfe8f5;
+  border: 1px solid #123B7A;
+}
+
+.ocultar {
+  visibility: hidden;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 150px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie <code>visibility: hidden</code> por <code>display: none</code>. La caja
+          2 deja de reservar espacio y la caja 3 cambia de posición.
+        </p>
+      </section>
+
+      <section>
+        <h2>La propiedad overflow</h2>
+        <p>
+          El contenido puede exceder las dimensiones de su caja cuando el contenedor
+          tiene un ancho o una altura limitados. La propiedad <code>overflow</code>
+          determina qué ocurre con esa parte del contenido.
+        </p>
+
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>Comportamiento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>visible</code></td>
+              <td>El contenido puede dibujarse fuera de la caja. Es el valor inicial en el caso general.</td>
+            </tr>
+            <tr>
+              <td><code>hidden</code></td>
+              <td>El contenido que excede la caja se recorta.</td>
+            </tr>
+            <tr>
+              <td><code>scroll</code></td>
+              <td>La caja se convierte en un contenedor de desplazamiento y muestra mecanismos de scroll.</td>
+            </tr>
+            <tr>
+              <td><code>auto</code></td>
+              <td>El navegador agrega mecanismos de scroll cuando el contenido los necesita.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: contenido que excede su contenedor</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="panel-overflow"&gt;
+  &lt;strong&gt;Texto dentro de una caja limitada&lt;/strong&gt;
+  &lt;p&gt;Este contenido ocupa más espacio vertical que el disponible en el contenedor. Modifique overflow para comparar el resultado.&lt;/p&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.panel-overflow {
+  width: 260px;
+  height: 80px;
+  overflow: visible;
+  border: 2px solid #123B7A;
+  padding: 10px;
+  margin: 20px;
+  font-family: sans-serif;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 190px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Pruebe los valores <code>hidden</code>, <code>scroll</code> y
+          <code>auto</code> en la propiedad <code>overflow</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Superposición y z-index</h2>
+        <p>
+          Cuando varias cajas ocupan una misma zona de la pantalla, el navegador debe
+          decidir cuál se dibuja delante. La propiedad <code>z-index</code> participa
+          en ese orden de apilamiento.
+        </p>
+        <p>
+          Un valor numérico mayor puede colocar una caja por encima de otra dentro del
+          mismo contexto de apilamiento. No debe interpretarse <code>z-index</code> como
+          un orden global para toda la página. Los contextos de apilamiento establecen
+          grupos independientes, por lo que un descendiente no puede superar libremente
+          el contexto al que pertenece solo por utilizar un número muy alto.
+        </p>
+        <p>
+          <code>z-index</code> tiene efecto sobre elementos posicionados y también en
+          otros casos definidos por CSS, entre ellos ciertos elementos flexibles y de
+          Grid. Para los ejemplos de esta clase se utilizarán cajas posicionadas.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: orden de apilamiento</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="escena"&gt;
+  &lt;div class="capa roja"&gt;Roja&lt;/div&gt;
+  &lt;div class="capa verde"&gt;Verde&lt;/div&gt;
+  &lt;div class="capa azul"&gt;Azul&lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.escena {
+  position: relative;
+  height: 190px;
+  font-family: sans-serif;
+}
+
+.capa {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.roja {
+  top: 20px;
+  left: 30px;
+  background: #a83333;
+  z-index: 3;
+}
+
+.verde {
+  top: 55px;
+  left: 80px;
+  background: #3c7d4a;
+  z-index: 2;
+}
+
+.azul {
+  top: 90px;
+  left: 130px;
+  background: #315b9a;
+  z-index: 1;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 230px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Intercambie los valores de <code>z-index</code> entre las tres cajas y
+          observe el orden de superposición.
+        </p>
+      </section>
+
+      <section>
+        <h2>Diseño de ancho fijo</h2>
+        <p>
+          Un diseño de ancho fijo utiliza una medida predeterminada para la zona
+          principal de contenido, normalmente expresada en píxeles. Su ancho no cambia
+          cuando cambia el ancho del viewport.
+        </p>
+        <ul>
+          <li>El ancho principal permanece constante.</li>
+          <li>En viewports más anchos queda espacio libre alrededor del contenido.</li>
+          <li>En viewports más estrechos puede aparecer desplazamiento horizontal.</li>
+          <li>Su comportamiento es predecible, pero no responde por sí solo a distintos tamaños de pantalla.</li>
+        </ul>
+        <p>
+          Este enfoque fue común en sitios orientados a resoluciones de escritorio.
+          Actualmente puede utilizarse en componentes con dimensiones controladas, pero
+          no resuelve por sí solo la adaptación de una página a distintos viewports.
+        </p>
+      </section>
+
+      <section>
+        <h2>Diseño fluido</h2>
+        <p>
+          Un diseño fluido utiliza medidas relativas para que las zonas de contenido
+          cambien de tamaño junto con su contenedor. Un ancho expresado en porcentaje
+          representa una proporción del espacio disponible en el bloque contenedor.
+        </p>
+        <ul>
+          <li>El ancho puede variar con el viewport o con el contenedor padre.</li>
+          <li>Las proporciones se expresan con unidades relativas, por ejemplo porcentajes.</li>
+          <li>El resultado aprovecha mejor el espacio disponible que un ancho fijo.</li>
+          <li>Un diseño fluido no equivale por sí mismo a un diseño responsivo completo.</li>
+        </ul>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: ancho fijo y ancho fluido</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="fijo"&gt;Ancho fijo: 420px&lt;/div&gt;
+&lt;div class="fluido"&gt;Ancho fluido: 80%&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">body {
+  font-family: sans-serif;
+  margin: 20px;
+}
+
+.fijo,
+.fluido {
+  box-sizing: border-box;
+  padding: 14px;
+  margin-bottom: 12px;
+  border: 1px solid #123B7A;
+  background-color: #dfe8f5;
+}
+
+.fijo {
+  width: 420px;
+}
+
+.fluido {
+  width: 80%;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 170px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie el ancho de <code>.fluido</code> a <code>50%</code>. Después reduzca
+          el ancho de la ventana del navegador y compare ambas cajas.
+        </p>
+      </section>
+
+      <section>
+        <h2>Resumen de propiedades</h2>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Propiedad</th>
+              <th>Uso principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>position</code></td>
+              <td>Selecciona el esquema de posicionamiento de una caja.</td>
+            </tr>
+            <tr>
+              <td><code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> e <code>inset</code></td>
+              <td>Definen desplazamientos o límites según el esquema de posicionamiento.</td>
+            </tr>
+            <tr>
+              <td><code>display</code></td>
+              <td>Determina el tipo de caja y su participación en el formato.</td>
+            </tr>
+            <tr>
+              <td><code>visibility</code></td>
+              <td>Controla si la caja se dibuja sin eliminar el espacio que ocupa.</td>
+            </tr>
+            <tr>
+              <td><code>overflow</code></td>
+              <td>Controla el contenido que excede las dimensiones de su caja.</td>
+            </tr>
+            <tr>
+              <td><code>z-index</code></td>
+              <td>Participa en el orden de apilamiento de cajas superpuestas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Recursos externos</h2>
+        <ul class="lista-recursos">
+          <li>
+            <a href="https://developer.mozilla.org/es/docs/Web/CSS/position" target="_blank" rel="noopener">MDN: position</a>
+            <span class="descripcion">Referencia de los valores de position y de su relación con las propiedades de desplazamiento.</span>
+          </li>
+          <li>
+            <a href="https://developer.mozilla.org/es/docs/Web/CSS/display" target="_blank" rel="noopener">MDN: display</a>
+            <span class="descripcion">Referencia sobre los tipos de visualización y los modelos de formato asociados.</span>
+          </li>
+          <li>
+            <a href="https://developer.mozilla.org/es/docs/Web/CSS/CSS_positioned_layout/Understanding_z-index" target="_blank" rel="noopener">MDN: comprensión de z-index</a>
+            <span class="descripcion">Material de referencia para estudiar orden de apilamiento y contextos de apilamiento.</span>
+          </li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/xml-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/html-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/css-hint.min.js"></script>
+  <script src="js/playground.js"></script>
+</body>
+</html>
