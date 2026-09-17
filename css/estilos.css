@@ -176,6 +176,39 @@ code {
   font-style: italic;
 }
 
+/* Índice local de cada página */
+
+.indice-pagina {
+  max-width: 72ch;
+  margin: 0 0 2.6rem 0;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--gris-medio);
+  border-left: 3px solid var(--dorado-esen);
+  background-color: var(--gris-claro);
+}
+
+.indice-pagina h2 {
+  margin: 0 0 0.65rem 0;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.95rem;
+  color: var(--gris-oscuro);
+}
+
+.indice-pagina ul {
+  columns: 2;
+  column-gap: 2rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.indice-pagina li {
+  break-inside: avoid;
+}
+
+.contenido section[id] {
+  scroll-margin-top: 1.5rem;
+}
+
 /* Contenido principal */
 
 .contenido {
@@ -411,6 +444,10 @@ li.CodeMirror-hint-active {
 
   .contenido {
     padding: 2rem 1.3rem 3rem 1.3rem;
+  }
+
+  .indice-pagina ul {
+    columns: 1;
   }
 
   .paneles-editor {

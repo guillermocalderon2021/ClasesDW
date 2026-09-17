@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formularios | Desarrollo Web I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/monokai.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.css">
+  <style>
+    .contenido .bloque-nota {
+      max-width: 72ch;
+      border-left: 3px solid var(--azul-esen);
+      background-color: #f7f9fc;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0 1.3rem 0;
+      font-size: 0.94rem;
+    }
+
+    .contenido .bloque-advertencia {
+      max-width: 72ch;
+      border-left: 3px solid var(--dorado-esen);
+      background-color: #fbfaf5;
+      padding: 0.8rem 1rem;
+      margin: 1rem 0 1.3rem 0;
+      font-size: 0.94rem;
+    }
+
+    .tabla-referencia td:first-child code {
+      white-space: normal;
+    }
+
+    .diagrama-formulario {
+      max-width: 760px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 1rem 0 1.6rem 0;
+    }
+
+    .codigo-bloque {
+      max-width: 72ch;
+      background: #1e1e1e;
+      color: #f3f4f6;
+      font-family: var(--fuente-codigo);
+      font-size: 0.86rem;
+      line-height: 1.55;
+      padding: 0.9rem 1rem;
+      border-radius: 5px;
+      overflow-x: auto;
+      white-space: pre;
+      margin: 1rem 0 1.3rem 0;
+    }
+
+    .muestra-datos {
+      max-width: 72ch;
+      border: 1px solid var(--gris-medio);
+      border-radius: 5px;
+      background: var(--gris-claro);
+      padding: 0.8rem 1rem;
+      font-family: var(--fuente-codigo);
+      font-size: 0.88rem;
+      margin: 0.8rem 0 1.3rem 0;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="masthead">
+    <span class="sigla">ESEN</span>
+    <span class="curso">Desarrollo Web I</span>
+    <span class="unidad">Formularios HTML</span>
+  </header>
+
+  <div class="estructura">
+
+    <nav class="navegacion-tema" aria-label="Navegación del curso">
+      <h2>Clases de la unidad</h2>
+      <ul class="lista-temas">
+        <li>
+          <a href="flexbox.html">Flexbox</a>
+        </li>
+        <li>
+          <a href="posicionamiento-visualizacion.html">Posicionamiento y visualización</a>
+        </li>
+        <li class="activo">
+          <a href="formularios.html" aria-current="page">Formularios</a>
+        </li>
+        <li>
+          <a href="responsive-design.html">Diseño web responsivo</a>
+        </li>
+        <li>
+          <a href="bootstrap.html">Fundamentos de Bootstrap</a>
+          <span class="nota-pendiente">Contenido pendiente</span>
+        </li>
+      </ul>
+    </nav>
+
+    <main class="contenido">
+      <header>
+        <h1>Formularios</h1>
+        <p class="subtitulo">Desarrollo Web I</p>
+      </header>
+
+      <nav class="indice-pagina" aria-labelledby="titulo-indice">
+        <h2 id="titulo-indice">En esta página</h2>
+        <ul>
+          <li><a href="#fundamentos">Fundamentos</a></li>
+          <li><a href="#envio">Envío de datos</a></li>
+          <li><a href="#controles">Controles de entrada</a></li>
+          <li><a href="#estructura">Estructura semántica</a></li>
+          <li><a href="#atributos">Atributos de los controles</a></li>
+          <li><a href="#estilizacion">Estilización</a></li>
+          <li><a href="#estados">Estados y pseudoclases</a></li>
+          <li><a href="#validacion">Validación</a></li>
+          <li><a href="#pattern">Expresiones regulares</a></li>
+          <li><a href="#formulario-integrado">Formulario integrado</a></li>
+          <li><a href="#recursos">Recursos externos</a></li>
+        </ul>
+      </nav>
+
+      <section id="fundamentos">
+        <h2>Formularios en HTML</h2>
+        <p>
+          Los formularios son el mecanismo estándar de HTML para recibir información
+          introducida o seleccionada por el usuario. Un formulario puede contener
+          campos de texto, listas, casillas de verificación, botones de opción,
+          selectores de fecha, controles para archivos y botones, entre otros
+          controles.
+        </p>
+        <p>
+          HTML define la estructura, el significado y buena parte del comportamiento
+          básico de estos controles. CSS permite controlar su presentación. El
+          procesamiento de los datos enviados corresponde posteriormente al servidor
+          o a código JavaScript cuando la aplicación requiere un flujo distinto al
+          envío tradicional del formulario.
+        </p>
+
+        <h3>El elemento form</h3>
+        <p>
+          El elemento <code>&lt;form&gt;</code> agrupa controles relacionados y define
+          cómo se enviarán sus datos. Para comprender un formulario conviene separar
+          cuatro conceptos: el control que el usuario manipula, la etiqueta que explica
+          su propósito, el nombre con el que se enviará el dato y el valor introducido.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: estructura básica de un formulario</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#" method="get"&gt;
+  &lt;div&gt;
+    &lt;label for="nombre"&gt;Nombre:&lt;/label&gt;
+    &lt;input
+      type="text"
+      id="nombre"
+      name="nombre"
+      required&gt;
+  &lt;/div&gt;
+
+  &lt;div&gt;
+    &lt;label for="correo"&gt;Correo electrónico:&lt;/label&gt;
+    &lt;input
+      type="email"
+      id="correo"
+      name="correo"
+      required&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  width: min(420px, 100%);
+  font-family: sans-serif;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+input,
+button {
+  font: inherit;
+  padding: 8px;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 235px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          El atributo <code>for</code> de cada <code>label</code> coincide con el
+          <code>id</code> del control correspondiente. El atributo <code>name</code>
+          identifica el dato cuando el formulario se envía.
+        </p>
+
+        <h3>id, name y value cumplen funciones diferentes</h3>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Atributo</th>
+              <th>Función principal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>id</code></td>
+              <td>Identifica un elemento dentro del documento. Se utiliza, entre otras cosas, para asociar un <code>label</code> con su control y para seleccionarlo desde CSS o JavaScript.</td>
+            </tr>
+            <tr>
+              <td><code>name</code></td>
+              <td>Define la clave con la que el control participa en los datos del formulario. Un control sin <code>name</code> normalmente no aporta una entrada al conjunto de datos enviado.</td>
+            </tr>
+            <tr>
+              <td><code>value</code></td>
+              <td>Representa el valor actual o inicial del control, según el tipo de entrada. En botones de opción y casillas de verificación permite definir qué valor se enviará cuando estén seleccionados.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="bloque-advertencia">
+          El atributo <code>placeholder</code> no sustituye a un <code>label</code>.
+          El texto de ayuda desaparece cuando el usuario escribe y no constituye una
+          asociación semántica entre la descripción y el control.
+        </div>
+      </section>
+
+      <section id="envio">
+        <h2>Envío de datos</h2>
+        <p>
+          Cuando se envía un formulario, el navegador construye un conjunto de pares
+          nombre y valor a partir de los controles que participan en el formulario.
+          Después codifica esos datos y genera una solicitud HTTP de acuerdo con los
+          atributos definidos en <code>&lt;form&gt;</code>.
+        </p>
+
+        <svg class="diagrama-formulario" viewBox="0 0 760 235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flujo de envío de un formulario desde los controles HTML hasta el servidor">
+          <defs>
+            <marker id="flecha-form" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 Z" fill="#C8AD55"></path>
+            </marker>
+          </defs>
+          <rect x="20" y="55" width="150" height="115" rx="5" fill="#F3F4F6" stroke="#123B7A" stroke-width="2"></rect>
+          <text x="95" y="82" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="15" fill="#123B7A">Controles HTML</text>
+          <text x="95" y="110" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B">name="correo"</text>
+          <text x="95" y="132" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B">value="a@b.com"</text>
+          <line x1="175" y1="112" x2="245" y2="112" stroke="#C8AD55" stroke-width="2" marker-end="url(#flecha-form)"></line>
+
+          <rect x="255" y="55" width="170" height="115" rx="5" fill="#F3F4F6" stroke="#123B7A" stroke-width="2"></rect>
+          <text x="340" y="82" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="15" fill="#123B7A">Conjunto de datos</text>
+          <text x="340" y="111" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B">correo = a@b.com</text>
+          <text x="340" y="133" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B">plan = pro</text>
+          <line x1="430" y1="112" x2="500" y2="112" stroke="#C8AD55" stroke-width="2" marker-end="url(#flecha-form)"></line>
+
+          <rect x="510" y="55" width="230" height="115" rx="5" fill="#F3F4F6" stroke="#123B7A" stroke-width="2"></rect>
+          <text x="625" y="82" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="15" fill="#123B7A">Solicitud HTTP</text>
+          <text x="625" y="110" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B">GET: datos en la URL</text>
+          <text x="625" y="133" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#2B2B2B">POST: datos en el cuerpo</text>
+          <text x="380" y="210" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13" fill="#55606e">El servidor recibe y procesa la solicitud.</text>
+        </svg>
+
+        <h3>Atributos principales de form</h3>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Atributo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>action</code></td>
+              <td>URL a la que se enviará la solicitud. Puede apuntar a una ruta del mismo sitio o a otro recurso que acepte los datos.</td>
+            </tr>
+            <tr>
+              <td><code>method</code></td>
+              <td>Método utilizado para enviar el formulario. Los valores habituales son <code>get</code> y <code>post</code>.</td>
+            </tr>
+            <tr>
+              <td><code>enctype</code></td>
+              <td>Codificación utilizada cuando el método es <code>post</code>. Para enviar archivos se utiliza <code>multipart/form-data</code>.</td>
+            </tr>
+            <tr>
+              <td><code>autocomplete</code></td>
+              <td>Indica si el navegador puede ayudar a completar los controles. Los controles individuales pueden especificar valores más precisos.</td>
+            </tr>
+            <tr>
+              <td><code>novalidate</code></td>
+              <td>Desactiva la validación de restricciones del navegador durante el envío del formulario.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>GET y POST</h3>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Aspecto</th>
+              <th>GET</th>
+              <th>POST</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ubicación de los datos</td>
+              <td>Se incorporan a la URL como parámetros de consulta.</td>
+              <td>Se incluyen en el cuerpo de la solicitud.</td>
+            </tr>
+            <tr>
+              <td>Uso habitual</td>
+              <td>Consultas, filtros, búsquedas y operaciones que no pretenden modificar el estado del servidor.</td>
+              <td>Creación, actualización y otras operaciones que envían información para ser procesada.</td>
+            </tr>
+            <tr>
+              <td>URL compartible</td>
+              <td>Los parámetros forman parte de la URL y pueden guardarse o compartirse.</td>
+              <td>Los datos no forman parte de la URL.</td>
+            </tr>
+            <tr>
+              <td>Datos sensibles</td>
+              <td>No deben colocarse datos sensibles en la URL.</td>
+              <td>Que los datos viajen en el cuerpo no los cifra. La confidencialidad en tránsito depende de HTTPS.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="bloque-advertencia">
+          <strong>POST no es un mecanismo de cifrado.</strong> Para proteger los datos
+          durante el transporte, la aplicación debe usar HTTPS. La validación y las
+          decisiones de seguridad tampoco deben depender únicamente del navegador.
+        </div>
+
+        <h3>Controles que participan en el envío</h3>
+        <p>
+          El atributo <code>name</code> es fundamental para construir los datos del
+          formulario. También existen estados que modifican la participación de un
+          control.
+        </p>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Situación</th>
+              <th>¿Se envía?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Control habilitado con <code>name</code></td>
+              <td>Sí, si corresponde según su tipo y estado.</td>
+            </tr>
+            <tr>
+              <td>Control sin <code>name</code></td>
+              <td>No aporta un par nombre y valor.</td>
+            </tr>
+            <tr>
+              <td>Control con <code>disabled</code></td>
+              <td>No.</td>
+            </tr>
+            <tr>
+              <td>Control con <code>readonly</code></td>
+              <td>Sí. El usuario no puede modificarlo, pero su valor puede enviarse.</td>
+            </tr>
+            <tr>
+              <td>Checkbox no seleccionado</td>
+              <td>No.</td>
+            </tr>
+            <tr>
+              <td>Radio no seleccionado</td>
+              <td>No.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Envío de archivos</h3>
+        <p>
+          Un formulario que envía archivos debe utilizar <code>method="post"</code> y
+          <code>enctype="multipart/form-data"</code>. El atributo <code>accept</code>
+          permite orientar al selector de archivos hacia determinados tipos, pero no
+          reemplaza la validación del servidor.
+        </p>
+        <div class="codigo-bloque">&lt;form action="/subir" method="post" enctype="multipart/form-data"&gt;
+  &lt;label for="archivo"&gt;Documento:&lt;/label&gt;
+  &lt;input id="archivo" name="archivo" type="file" accept=".pdf"&gt;
+  &lt;button type="submit"&gt;Subir archivo&lt;/button&gt;
+&lt;/form&gt;</div>
+      </section>
+
+      <section id="controles">
+        <h2>Controles de entrada</h2>
+        <p>
+          El elemento <code>&lt;input&gt;</code> cambia de comportamiento según el valor
+          de su atributo <code>type</code>. Elegir el tipo correcto mejora el teclado
+          mostrado en dispositivos móviles, aporta semántica y permite que el navegador
+          aplique restricciones de validación apropiadas.
+        </p>
+
+        <h3>Entradas de texto y datos estructurados</h3>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Uso</th>
+              <th>Observación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>text</code></td>
+              <td>Texto de una sola línea.</td>
+              <td>Es el valor predeterminado de <code>type</code>.</td>
+            </tr>
+            <tr>
+              <td><code>password</code></td>
+              <td>Contraseñas.</td>
+              <td>Oculta visualmente los caracteres, pero no cifra el valor.</td>
+            </tr>
+            <tr>
+              <td><code>email</code></td>
+              <td>Direcciones de correo electrónico.</td>
+              <td>Realiza validación sintáctica básica. No comprueba que la dirección exista.</td>
+            </tr>
+            <tr>
+              <td><code>tel</code></td>
+              <td>Números telefónicos.</td>
+              <td>No impone un formato universal. Puede combinarse con <code>pattern</code>.</td>
+            </tr>
+            <tr>
+              <td><code>url</code></td>
+              <td>Direcciones URL.</td>
+              <td>El navegador verifica que el valor tenga sintaxis de URL.</td>
+            </tr>
+            <tr>
+              <td><code>search</code></td>
+              <td>Campos de búsqueda.</td>
+              <td>Su apariencia puede diferir ligeramente entre navegadores.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: tipos de entrada de texto</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#"&gt;
+  &lt;label for="usuario"&gt;Usuario:&lt;/label&gt;
+  &lt;input id="usuario" name="usuario" type="text"&gt;
+
+  &lt;label for="clave"&gt;Contraseña:&lt;/label&gt;
+  &lt;input
+    id="clave"
+    name="clave"
+    type="password"
+    autocomplete="current-password"&gt;
+
+  &lt;label for="correo"&gt;Correo:&lt;/label&gt;
+  &lt;input id="correo" name="correo" type="email"&gt;
+
+  &lt;label for="telefono"&gt;Teléfono:&lt;/label&gt;
+  &lt;input id="telefono" name="telefono" type="tel"&gt;
+
+  &lt;label for="sitio"&gt;Sitio web:&lt;/label&gt;
+  &lt;input id="sitio" name="sitio" type="url"&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 380px;
+  font-family: sans-serif;
+}
+
+input {
+  font: inherit;
+  padding: 7px 9px;
+  margin-bottom: 7px;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 365px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie alguno de los tipos a <code>text</code> y compare el comportamiento.
+          En un dispositivo móvil también puede cambiar el teclado disponible para
+          determinados tipos de campo.
+        </p>
+
+        <h3>Números, fechas y otros controles nativos</h3>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Uso</th>
+              <th>Atributos frecuentes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>number</code></td>
+              <td>Valores numéricos.</td>
+              <td><code>min</code>, <code>max</code>, <code>step</code>.</td>
+            </tr>
+            <tr>
+              <td><code>range</code></td>
+              <td>Selección aproximada dentro de un rango.</td>
+              <td><code>min</code>, <code>max</code>, <code>step</code>, <code>value</code>.</td>
+            </tr>
+            <tr>
+              <td><code>date</code></td>
+              <td>Fecha calendario.</td>
+              <td><code>min</code>, <code>max</code>.</td>
+            </tr>
+            <tr>
+              <td><code>time</code></td>
+              <td>Hora.</td>
+              <td><code>min</code>, <code>max</code>, <code>step</code>.</td>
+            </tr>
+            <tr>
+              <td><code>datetime-local</code></td>
+              <td>Fecha y hora local, sin información de zona horaria.</td>
+              <td><code>min</code>, <code>max</code>.</td>
+            </tr>
+            <tr>
+              <td><code>color</code></td>
+              <td>Selección de color.</td>
+              <td><code>value</code>.</td>
+            </tr>
+            <tr>
+              <td><code>file</code></td>
+              <td>Selección de archivos.</td>
+              <td><code>accept</code>, <code>multiple</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: controles nativos especializados</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#"&gt;
+  &lt;label for="edad"&gt;Edad:&lt;/label&gt;
+  &lt;input id="edad" name="edad" type="number" min="18" max="80"&gt;
+
+  &lt;label for="fecha"&gt;Fecha de la cita:&lt;/label&gt;
+  &lt;input id="fecha" name="fecha" type="date"&gt;
+
+  &lt;label for="hora"&gt;Hora:&lt;/label&gt;
+  &lt;input id="hora" name="hora" type="time"&gt;
+
+  &lt;label for="nivel"&gt;Nivel de experiencia:&lt;/label&gt;
+  &lt;input id="nivel" name="nivel" type="range" min="0" max="10" value="5"&gt;
+
+  &lt;label for="color"&gt;Color preferido:&lt;/label&gt;
+  &lt;input id="color" name="color" type="color" value="#123b7a"&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 380px;
+  font-family: sans-serif;
+}
+
+input {
+  font: inherit;
+  margin-bottom: 6px;
+}
+
+input:not([type="range"]):not([type="color"]) {
+  padding: 7px;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 365px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+
+        <h3>Checkbox y radio</h3>
+        <p>
+          Un <code>checkbox</code> representa una decisión independiente que puede
+          estar seleccionada o no. Los botones <code>radio</code> representan opciones
+          mutuamente excluyentes cuando comparten el mismo <code>name</code>.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: grupos de selección</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Tecnologías de interés&lt;/legend&gt;
+
+    &lt;label&gt;
+      &lt;input type="checkbox" name="tecnologia" value="html"&gt;
+      HTML
+    &lt;/label&gt;
+
+    &lt;label&gt;
+      &lt;input type="checkbox" name="tecnologia" value="css"&gt;
+      CSS
+    &lt;/label&gt;
+  &lt;/fieldset&gt;
+
+  &lt;fieldset&gt;
+    &lt;legend&gt;Modalidad preferida&lt;/legend&gt;
+
+    &lt;label&gt;
+      &lt;input type="radio" name="modalidad" value="presencial" checked&gt;
+      Presencial
+    &lt;/label&gt;
+
+    &lt;label&gt;
+      &lt;input type="radio" name="modalidad" value="virtual"&gt;
+      Virtual
+    &lt;/label&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  max-width: 430px;
+  font-family: sans-serif;
+}
+
+fieldset {
+  margin-bottom: 16px;
+  border: 1px solid #cfd4dc;
+}
+
+fieldset label {
+  display: block;
+  margin: 7px 0;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 285px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Seleccione ambos checkbox. Después intente seleccionar simultáneamente las
+          dos opciones radio. Cambie el <code>name</code> de uno de los radio y observe
+          cómo deja de pertenecer al mismo grupo.
+        </p>
+
+        <h3>Campos ocultos</h3>
+        <p>
+          <code>&lt;input type="hidden"&gt;</code> permite incorporar un valor al envío sin
+          mostrar un control en la interfaz. Que el campo sea invisible no lo convierte
+          en un dato protegido. El usuario puede inspeccionar y modificar el HTML desde
+          las herramientas del navegador, por lo que el servidor debe validar cualquier
+          valor recibido.
+        </p>
+      </section>
+
+      <section id="estructura">
+        <h2>Estructura semántica del formulario</h2>
+
+        <h3>label</h3>
+        <p>
+          Cada control que recibe datos debe tener una descripción comprensible. La
+          asociación explícita entre <code>label</code> y control se establece haciendo
+          coincidir <code>for</code> con el <code>id</code>. Esta relación mejora la
+          accesibilidad y también permite activar o enfocar el control al seleccionar
+          su etiqueta.
+        </p>
+
+        <h3>fieldset y legend</h3>
+        <p>
+          <code>fieldset</code> agrupa controles relacionados y <code>legend</code>
+          proporciona el nombre del grupo. Son especialmente útiles en conjuntos de
+          radio buttons y checkboxes porque aportan contexto al grupo completo.
+        </p>
+
+        <h3>select, option y optgroup</h3>
+        <p>
+          <code>select</code> permite elegir una o varias opciones predefinidas.
+          <code>option</code> define cada opción y <code>optgroup</code> permite agrupar
+          opciones relacionadas. Conviene establecer un <code>value</code> explícito
+          cuando el texto visible no debe ser el dato que reciba el servidor.
+        </p>
+
+        <h3>datalist</h3>
+        <p>
+          <code>datalist</code> ofrece sugerencias para un <code>input</code>, pero no
+          restringe el valor únicamente a esas sugerencias. El usuario puede escribir
+          otro valor si el control lo permite.
+        </p>
+
+        <h3>textarea</h3>
+        <p>
+          <code>textarea</code> recibe texto de varias líneas. Su valor inicial se
+          escribe entre la etiqueta de apertura y la etiqueta de cierre. Los atributos
+          <code>rows</code> y <code>cols</code> pueden definir un tamaño inicial, aunque
+          en una interfaz real suele ser preferible controlar el tamaño visual con CSS.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: select, datalist y textarea</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#"&gt;
+  &lt;label for="carrera"&gt;Carrera:&lt;/label&gt;
+  &lt;select id="carrera" name="carrera"&gt;
+    &lt;option value="software"&gt;Ingeniería de Software&lt;/option&gt;
+    &lt;option value="negocios"&gt;Negocios Digitales&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;label for="editor"&gt;Editor preferido:&lt;/label&gt;
+  &lt;input id="editor" name="editor" list="editores"&gt;
+  &lt;datalist id="editores"&gt;
+    &lt;option value="Visual Studio Code"&gt;
+    &lt;option value="WebStorm"&gt;
+    &lt;option value="Zed"&gt;
+  &lt;/datalist&gt;
+
+  &lt;label for="comentario"&gt;Comentario:&lt;/label&gt;
+  &lt;textarea id="comentario" name="comentario" rows="4"&gt;&lt;/textarea&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 420px;
+  font-family: sans-serif;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  padding: 8px;
+  margin-bottom: 9px;
+}
+
+textarea {
+  resize: vertical;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 350px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+
+        <h3>button</h3>
+        <p>
+          Para los botones de una interfaz moderna se prefiere normalmente el elemento
+          <code>&lt;button&gt;</code> frente a <code>&lt;input type="button"&gt;</code> o
+          <code>&lt;input type="submit"&gt;</code>, porque permite contenido HTML y ofrece
+          mayor flexibilidad de presentación.
+        </p>
+        <p>
+          Dentro de un formulario, un <code>button</code> sin <code>type</code> se
+          comporta como un botón de envío. Cuando el botón no debe enviar el formulario
+          conviene escribir explícitamente <code>type="button"</code>. Los botones de
+          tipo <code>reset</code> deben utilizarse con cuidado, ya que pueden borrar
+          accidentalmente el trabajo del usuario.
+        </p>
+      </section>
+
+      <section id="atributos">
+        <h2>Atributos de los controles</h2>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Atributo</th>
+              <th>Función</th>
+              <th>Aplicación habitual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>placeholder</code></td>
+              <td>Muestra una pista breve sobre el dato esperado.</td>
+              <td>Entradas de texto y <code>textarea</code>.</td>
+            </tr>
+            <tr>
+              <td><code>required</code></td>
+              <td>Impide el envío si el control requerido no satisface la condición de obligatoriedad.</td>
+              <td>Controles que forman parte de la validación de restricciones.</td>
+            </tr>
+            <tr>
+              <td><code>minlength</code> y <code>maxlength</code></td>
+              <td>Definen límites de longitud para texto.</td>
+              <td>Campos de texto y <code>textarea</code>.</td>
+            </tr>
+            <tr>
+              <td><code>min</code>, <code>max</code> y <code>step</code></td>
+              <td>Definen límites y granularidad.</td>
+              <td>Números, fechas, horas y rangos.</td>
+            </tr>
+            <tr>
+              <td><code>pattern</code></td>
+              <td>Define una expresión regular que debe satisfacer el valor.</td>
+              <td><code>text</code>, <code>search</code>, <code>url</code>, <code>tel</code>, <code>email</code> y <code>password</code>.</td>
+            </tr>
+            <tr>
+              <td><code>readonly</code></td>
+              <td>Impide modificar el valor sin excluirlo del envío.</td>
+              <td>Controles textuales compatibles.</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td>Deshabilita la interacción y excluye el control del envío.</td>
+              <td>Controles temporalmente no disponibles.</td>
+            </tr>
+            <tr>
+              <td><code>multiple</code></td>
+              <td>Permite seleccionar o proporcionar más de un valor cuando el tipo lo admite.</td>
+              <td><code>file</code>, <code>email</code> y <code>select</code>.</td>
+            </tr>
+            <tr>
+              <td><code>accept</code></td>
+              <td>Indica tipos de archivo preferidos para el selector.</td>
+              <td><code>file</code>.</td>
+            </tr>
+            <tr>
+              <td><code>inputmode</code></td>
+              <td>Orienta al navegador sobre el teclado virtual más apropiado. No añade validación por sí mismo.</td>
+              <td>Entradas de texto en dispositivos con teclado virtual.</td>
+            </tr>
+            <tr>
+              <td><code>form</code></td>
+              <td>Asocia un control con un formulario mediante el <code>id</code> del formulario, incluso cuando el control está fuera del elemento <code>form</code>.</td>
+              <td>Controles cuya ubicación visual o estructural está separada del formulario al que pertenecen.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>autocomplete</h3>
+        <p>
+          <code>autocomplete</code> no se limita a <code>on</code> y <code>off</code>.
+          Los valores semánticos permiten indicar al navegador qué información espera
+          cada campo. Esto facilita el autocompletado y puede mejorar la experiencia de
+          uso, especialmente en formularios repetitivos.
+        </p>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>Dato esperado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name</code></td><td>Nombre completo.</td></tr>
+            <tr><td><code>given-name</code></td><td>Nombre de pila.</td></tr>
+            <tr><td><code>family-name</code></td><td>Apellido.</td></tr>
+            <tr><td><code>email</code></td><td>Correo electrónico.</td></tr>
+            <tr><td><code>tel</code></td><td>Número telefónico.</td></tr>
+            <tr><td><code>username</code></td><td>Nombre de usuario.</td></tr>
+            <tr><td><code>current-password</code></td><td>Contraseña actual.</td></tr>
+            <tr><td><code>new-password</code></td><td>Nueva contraseña.</td></tr>
+          </tbody>
+        </table>
+        <div class="bloque-nota">
+          En formularios de autenticación, los navegadores y gestores de contraseñas
+          pueden ignorar <code>autocomplete="off"</code>. Para una contraseña nueva es
+          más informativo utilizar <code>autocomplete="new-password"</code>.
+        </div>
+      </section>
+
+      <section id="estilizacion">
+        <h2>Estilización de formularios</h2>
+        <p>
+          Los controles de formulario tienen estilos nativos definidos por el navegador
+          y el sistema operativo. Es posible personalizar gran parte de su apariencia,
+          pero conviene conservar señales de interacción reconocibles y estados de foco
+          visibles.
+        </p>
+        <p>
+          Para alinear etiquetas y controles no es necesario utilizar tablas ni
+          <code>float</code>. Flexbox permite construir la distribución directamente a
+          partir de la estructura semántica del formulario.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: formulario alineado con Flexbox</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form class="registro" action="#"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Registro del estudiante&lt;/legend&gt;
+
+    &lt;div class="fila"&gt;
+      &lt;label for="nombres"&gt;Nombres:&lt;/label&gt;
+      &lt;input id="nombres" name="nombres" type="text"&gt;
+    &lt;/div&gt;
+
+    &lt;div class="fila"&gt;
+      &lt;label for="apellidos"&gt;Apellidos:&lt;/label&gt;
+      &lt;input id="apellidos" name="apellidos" type="text"&gt;
+    &lt;/div&gt;
+
+    &lt;div class="fila"&gt;
+      &lt;label for="carnet"&gt;Carnet:&lt;/label&gt;
+      &lt;input id="carnet" name="carnet" type="text"&gt;
+    &lt;/div&gt;
+
+    &lt;div class="acciones"&gt;
+      &lt;button type="submit"&gt;Registrarme&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.registro {
+  max-width: 520px;
+  font-family: sans-serif;
+}
+
+.registro fieldset {
+  border: 1px solid #cfd4dc;
+  padding: 18px;
+}
+
+.fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.fila label {
+  flex: 0 0 110px;
+}
+
+.fila input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding: 8px;
+}
+
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  font: inherit;
+  padding: 8px 14px;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 285px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Cambie <code>flex-direction</code> de cada <code>.fila</code> a
+          <code>column</code> y agregue <code>align-items: stretch</code>. Compare una
+          distribución horizontal con una distribución vertical de los campos.
+        </p>
+
+        <h3>Foco visible</h3>
+        <p>
+          El foco indica qué control recibirá la interacción del teclado. No debe
+          eliminarse sin proporcionar una alternativa clara. La pseudoclase
+          <code>:focus-visible</code> permite destacar el foco cuando el navegador
+          determina que el indicador visual es necesario.
+        </p>
+        <div class="codigo-bloque">input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 3px solid #C8AD55;
+  outline-offset: 2px;
+}</div>
+      </section>
+
+      <section id="estados">
+        <h2>Estados y pseudoclases de formularios</h2>
+        <p>
+          CSS puede seleccionar controles según su estado. Esto permite mostrar
+          información visual sin agregar clases manualmente para cada cambio de estado.
+        </p>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Pseudoclase</th>
+              <th>Selecciona</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>:focus</code></td><td>El elemento que posee el foco.</td></tr>
+            <tr><td><code>:focus-visible</code></td><td>El elemento enfocado cuando corresponde mostrar una indicación visible de foco.</td></tr>
+            <tr><td><code>:required</code></td><td>Controles que tienen el atributo <code>required</code>.</td></tr>
+            <tr><td><code>:optional</code></td><td>Controles que no son obligatorios.</td></tr>
+            <tr><td><code>:valid</code></td><td>Controles cuyo valor satisface las restricciones aplicables.</td></tr>
+            <tr><td><code>:invalid</code></td><td>Controles cuyo valor no satisface alguna restricción.</td></tr>
+            <tr><td><code>:user-valid</code></td><td>Controles válidos después de interacción relevante del usuario.</td></tr>
+            <tr><td><code>:user-invalid</code></td><td>Controles inválidos después de interacción relevante del usuario.</td></tr>
+            <tr><td><code>:checked</code></td><td>Checkbox, radio u opciones que se encuentran seleccionados.</td></tr>
+            <tr><td><code>:in-range</code></td><td>Controles cuyo valor se encuentra dentro de sus límites.</td></tr>
+            <tr><td><code>:out-of-range</code></td><td>Controles cuyo valor no satisface sus límites.</td></tr>
+            <tr><td><code>:disabled</code></td><td>Controles deshabilitados.</td></tr>
+            <tr><td><code>:read-only</code></td><td>Controles no editables por el usuario.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="bloque-nota">
+          <code>:user-valid</code> y <code>:user-invalid</code> permiten retrasar la
+          indicación visual hasta que exista interacción del usuario. Cuando se necesita
+          compatibilidad con navegadores que no implementen estas pseudoclases,
+          <code>:valid</code> y <code>:invalid</code> siguen siendo la alternativa básica.
+        </div>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: estados de los controles</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#"&gt;
+  &lt;label for="correo2"&gt;Correo obligatorio:&lt;/label&gt;
+  &lt;input id="correo2" name="correo" type="email" required placeholder="nombre@dominio.com"&gt;
+
+  &lt;label for="edad2"&gt;Edad entre 18 y 30:&lt;/label&gt;
+  &lt;input id="edad2" name="edad" type="number" min="18" max="30" value="20"&gt;
+
+  &lt;label class="terminos"&gt;
+    &lt;input type="checkbox" name="terminos" required&gt;
+    Acepto las condiciones
+  &lt;/label&gt;
+
+  &lt;input type="text" value="Solo lectura" readonly&gt;
+  &lt;input type="text" value="Deshabilitado" disabled&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 410px;
+  font-family: sans-serif;
+}
+
+input {
+  font: inherit;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #8d96a3;
+}
+
+input:focus-visible {
+  outline: 3px solid #C8AD55;
+  outline-offset: 2px;
+}
+
+input:out-of-range {
+  border-color: #b42318;
+}
+
+input:checked {
+  accent-color: #123B7A;
+}
+
+input:read-only {
+  background-color: #f1f3f5;
+}
+
+input:disabled {
+  opacity: 0.55;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 395px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Asigne a la edad un valor mayor que 30 y observe <code>:out-of-range</code>.
+          Seleccione el checkbox y compare el estado visual. Intente editar los dos
+          últimos campos para distinguir <code>readonly</code> de <code>disabled</code>.
+        </p>
+      </section>
+
+      <section id="validacion">
+        <h2>Validación nativa del navegador</h2>
+        <p>
+          HTML incorpora un sistema de validación de restricciones. Antes de enviar un
+          formulario, el navegador puede verificar condiciones derivadas del tipo de
+          control y de atributos como <code>required</code>, <code>minlength</code>,
+          <code>maxlength</code>, <code>min</code>, <code>max</code>, <code>step</code>
+          y <code>pattern</code>.
+        </p>
+
+        <div class="bloque-advertencia">
+          La validación realizada por HTML se ejecuta en el cliente. Puede mejorar la
+          experiencia del usuario y evitar envíos evidentemente incorrectos, pero no
+          reemplaza la validación del servidor. El servidor debe considerar no confiable
+          cualquier dato recibido del cliente.
+        </div>
+
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Mecanismo</th>
+              <th>Ejemplo</th>
+              <th>Qué verifica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>required</code></td>
+              <td><code>&lt;input required&gt;</code></td>
+              <td>Que el control obligatorio tenga un valor aceptable.</td>
+            </tr>
+            <tr>
+              <td><code>type="email"</code></td>
+              <td><code>&lt;input type="email"&gt;</code></td>
+              <td>Sintaxis básica de una dirección de correo electrónico.</td>
+            </tr>
+            <tr>
+              <td><code>minlength</code></td>
+              <td><code>minlength="8"</code></td>
+              <td>Longitud mínima del texto.</td>
+            </tr>
+            <tr>
+              <td><code>min</code> y <code>max</code></td>
+              <td><code>min="18" max="100"</code></td>
+              <td>Rango permitido para tipos compatibles.</td>
+            </tr>
+            <tr>
+              <td><code>pattern</code></td>
+              <td><code>pattern="[0-9]{8}"</code></td>
+              <td>Que el valor completo satisfaga una expresión regular.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: validación de restricciones</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#"&gt;
+  &lt;label for="nombre3"&gt;Nombre:&lt;/label&gt;
+  &lt;input id="nombre3" name="nombre" type="text" required minlength="3"&gt;
+
+  &lt;label for="email3"&gt;Correo:&lt;/label&gt;
+  &lt;input id="email3" name="email" type="email" required&gt;
+
+  &lt;label for="edad3"&gt;Edad:&lt;/label&gt;
+  &lt;input id="edad3" name="edad" type="number" min="18" max="100" required&gt;
+
+  &lt;button type="submit"&gt;Enviar&lt;/button&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 390px;
+  font-family: sans-serif;
+}
+
+input,
+button {
+  font: inherit;
+  padding: 8px;
+}
+
+input {
+  margin-bottom: 8px;
+}
+
+input:user-invalid {
+  border: 2px solid #b42318;
+}
+
+input:user-valid {
+  border: 2px solid #2f7d32;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 330px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Intente enviar el formulario vacío. Después escriba un correo sin formato de
+          correo electrónico y una edad fuera del rango. Observe qué restricciones son
+          evaluadas por el navegador.
+        </p>
+
+        <h3>novalidate y formnovalidate</h3>
+        <p>
+          <code>novalidate</code> en <code>form</code> permite enviar el formulario sin
+          ejecutar la validación nativa. Un botón de envío también puede utilizar
+          <code>formnovalidate</code> para omitirla únicamente cuando el formulario se
+          envía mediante ese botón. Estos atributos no eliminan la necesidad de validar
+          en el servidor.
+        </p>
+      </section>
+
+      <section id="pattern">
+        <h2>Validación con pattern y expresiones regulares</h2>
+        <p>
+          El atributo <code>pattern</code> permite definir una expresión regular para
+          validar valores de controles de tipo <code>text</code>, <code>search</code>,
+          <code>url</code>, <code>tel</code>, <code>email</code> y
+          <code>password</code>. En HTML la expresión debe coincidir con el valor
+          completo del control, por lo que no es necesario agregar manualmente
+          <code>^</code> y <code>$</code> para exigir coincidencia total.
+        </p>
+
+        <h3>Elementos básicos de una expresión regular</h3>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Expresión</th>
+              <th>Significado</th>
+              <th>Ejemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>[0-9]</code></td>
+              <td>Un dígito entre 0 y 9.</td>
+              <td><code>[0-9]{8}</code> exige ocho dígitos.</td>
+            </tr>
+            <tr>
+              <td><code>[A-Za-z]</code></td>
+              <td>Una letra mayúscula o minúscula del alfabeto latino indicado.</td>
+              <td><code>[A-Za-z]{3}</code> exige tres letras.</td>
+            </tr>
+            <tr>
+              <td><code>[^0-9]</code></td>
+              <td>Un carácter que no pertenece al conjunto indicado.</td>
+              <td><code>[^0-9]+</code> exige uno o más caracteres que no sean dígitos.</td>
+            </tr>
+            <tr>
+              <td><code>A|B</code></td>
+              <td>Alternativa entre dos expresiones.</td>
+              <td><code>(A|B)+</code> permite secuencias formadas por A o B.</td>
+            </tr>
+            <tr>
+              <td><code>{n}</code></td>
+              <td>Exactamente n repeticiones.</td>
+              <td><code>[0-9]{4}</code>.</td>
+            </tr>
+            <tr>
+              <td><code>{n,m}</code></td>
+              <td>Entre n y m repeticiones.</td>
+              <td><code>[A-Za-z]{5,10}</code>.</td>
+            </tr>
+            <tr>
+              <td><code>+</code></td>
+              <td>Una o más repeticiones.</td>
+              <td><code>[A-Za-z]+</code>.</td>
+            </tr>
+            <tr>
+              <td><code>*</code></td>
+              <td>Cero o más repeticiones.</td>
+              <td><code>[0-9]*</code>.</td>
+            </tr>
+            <tr>
+              <td><code>?</code></td>
+              <td>Cero o una repetición.</td>
+              <td><code>-?[0-9]+</code> permite un signo negativo opcional.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Ejemplo: carnet de ocho dígitos</h3>
+        <p>
+          Si el formato esperado consiste exactamente en ocho dígitos, el patrón puede
+          escribirse como <code>[0-9]{8}</code>. Además del mensaje que pueda producir
+          el navegador, el formato esperado debe explicarse de forma visible cerca del
+          control.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo: pattern</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form action="#"&gt;
+  &lt;label for="carnet4"&gt;Carnet:&lt;/label&gt;
+  &lt;input
+    id="carnet4"
+    name="carnet"
+    type="text"
+    inputmode="numeric"
+    pattern="[0-9]{8}"
+    required
+    aria-describedby="ayuda-carnet"&gt;
+
+  &lt;small id="ayuda-carnet"&gt;
+    Ingrese exactamente 8 dígitos.
+  &lt;/small&gt;
+
+  &lt;button type="submit"&gt;Validar&lt;/button&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">form {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-width: 380px;
+  font-family: sans-serif;
+}
+
+input,
+button {
+  font: inherit;
+  padding: 8px;
+}
+
+small {
+  color: #55606e;
+  margin-bottom: 6px;
+}
+
+input:user-invalid {
+  border: 2px solid #b42318;
+}
+
+input:user-valid {
+  border: 2px solid #2f7d32;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 245px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Pruebe valores con siete dígitos, ocho dígitos y combinaciones de letras y
+          números. Después cambie el patrón a <code>[A-Za-z]{5,10}</code> y observe la
+          nueva restricción.
+        </p>
+      </section>
+
+      <section id="formulario-integrado">
+        <h2>Formulario integrado</h2>
+        <p>
+          El siguiente ejemplo reúne estructura semántica, tipos de control,
+          autocompletado, Flexbox, validación nativa y estados visuales. El objetivo es
+          observar cómo las piezas estudiadas se combinan en un formulario completo sin
+          depender todavía de JavaScript.
+        </p>
+
+        <div class="playground">
+          <div class="titulo-playground">Ejemplo integrado: solicitud de contacto</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;form class="contacto" action="#" method="post"&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Datos de contacto&lt;/legend&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="nombre-final"&gt;Nombre completo&lt;/label&gt;
+      &lt;input
+        id="nombre-final"
+        name="nombre"
+        type="text"
+        autocomplete="name"
+        required&gt;
+    &lt;/div&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="correo-final"&gt;Correo electrónico&lt;/label&gt;
+      &lt;input
+        id="correo-final"
+        name="correo"
+        type="email"
+        autocomplete="email"
+        required&gt;
+    &lt;/div&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="tema-final"&gt;Tema&lt;/label&gt;
+      &lt;select id="tema-final" name="tema" required&gt;
+        &lt;option value=""&gt;Seleccione una opción&lt;/option&gt;
+        &lt;option value="consulta"&gt;Consulta&lt;/option&gt;
+        &lt;option value="soporte"&gt;Soporte&lt;/option&gt;
+        &lt;option value="otro"&gt;Otro&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;div class="campo"&gt;
+      &lt;label for="mensaje-final"&gt;Mensaje&lt;/label&gt;
+      &lt;textarea
+        id="mensaje-final"
+        name="mensaje"
+        rows="5"
+        minlength="20"
+        required&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+
+    &lt;label class="consentimiento"&gt;
+      &lt;input type="checkbox" name="copia" value="si"&gt;
+      Enviar una copia a mi correo
+    &lt;/label&gt;
+
+    &lt;button type="submit"&gt;Enviar solicitud&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.contacto {
+  width: min(520px, 100%);
+  font-family: sans-serif;
+}
+
+.contacto fieldset {
+  border: 1px solid #cfd4dc;
+  border-radius: 6px;
+  padding: 18px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 13px;
+}
+
+.contacto input,
+.contacto select,
+.contacto textarea,
+.contacto button {
+  font: inherit;
+}
+
+.contacto input,
+.contacto select,
+.contacto textarea {
+  border: 1px solid #8d96a3;
+  border-radius: 4px;
+  padding: 9px;
+}
+
+.contacto textarea {
+  resize: vertical;
+}
+
+.contacto :focus-visible {
+  outline: 3px solid #C8AD55;
+  outline-offset: 2px;
+}
+
+.consentimiento {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 5px 0 15px;
+}
+
+.contacto button {
+  background: #123B7A;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  padding: 9px 14px;
+  cursor: pointer;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <span class="etiqueta">Resultado</span>
+            <iframe class="vista-previa" style="height: 500px;"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="recursos">
+        <h2>Recursos externos</h2>
+        <ul class="lista-recursos">
+          <li>
+            <a href="https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Forms/Your_first_form" target="_blank" rel="noopener">MDN: Mi primer formulario HTML</a>
+            <span class="descripcion">Introducción a la estructura de un formulario, etiquetas, controles y envío básico.</span>
+          </li>
+          <li>
+            <a href="https://developer.mozilla.org/es/docs/Learn_web_development/Extensions/Forms/Form_validation" target="_blank" rel="noopener">MDN: Validación de formularios en el lado del cliente</a>
+            <span class="descripcion">Referencia práctica sobre restricciones nativas, estados válidos e inválidos y validación desde el navegador.</span>
+          </li>
+          <li>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/autocomplete" target="_blank" rel="noopener">MDN: atributo autocomplete</a>
+            <span class="descripcion">Listado de valores semánticos disponibles para ayudar al navegador y a los gestores de contraseñas a completar controles.</span>
+          </li>
+          <li>
+            <a href="https://html.spec.whatwg.org/multipage/forms.html" target="_blank" rel="noopener">WHATWG HTML: Forms</a>
+            <span class="descripcion">Especificación técnica de los elementos, atributos, envío y validación de formularios HTML.</span>
+          </li>
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/xml-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/html-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/css-hint.min.js"></script>
+  <script src="js/playground.js"></script>
+</body>
+</html>

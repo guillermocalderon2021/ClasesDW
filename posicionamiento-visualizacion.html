@@ -22,34 +22,24 @@
 
   <div class="estructura">
 
-    <nav class="navegacion-tema">
-      <h2>Temas de la unidad</h2>
+    <nav class="navegacion-tema" aria-label="Navegación del curso">
+      <h2>Clases de la unidad</h2>
       <ul class="lista-temas">
         <li>
           <a href="flexbox.html">Flexbox</a>
         </li>
         <li class="activo">
-          <a href="posicionamiento-visualizacion.html">Posicionamiento y visualización</a>
+          <a href="posicionamiento-visualizacion.html" aria-current="page">Posicionamiento y visualización</a>
         </li>
-        <li class="pendiente">
-          <a href="#">CSS Grid</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
+        <li>
+          <a href="formularios.html">Formularios</a>
         </li>
-        <li class="pendiente">
-          <a href="#">Diseño web responsivo</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
+        <li>
+          <a href="responsive-design.html">Diseño web responsivo</a>
         </li>
-        <li class="pendiente">
-          <a href="#">Media queries y contenido responsivo</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
-        </li>
-        <li class="pendiente">
-          <a href="#">Sistema de malla de Bootstrap</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
-        </li>
-        <li class="pendiente">
-          <a href="#">Utilidades y componentes de Bootstrap</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
+        <li>
+          <a href="bootstrap.html">Fundamentos de Bootstrap</a>
+          <span class="nota-pendiente">Contenido pendiente</span>
         </li>
       </ul>
     </nav>
@@ -60,7 +50,29 @@
         <p class="subtitulo">Unidad II — Desarrollo Web I</p>
       </header>
 
-      <section>
+      <nav class="indice-pagina" aria-labelledby="titulo-indice">
+        <h2 id="titulo-indice">En esta página</h2>
+        <ul>
+          <li><a href="#modelo-visual">Modelo de formato visual</a></li>
+          <li><a href="#flujo-normal">Flujo normal</a></li>
+          <li><a href="#position">La propiedad position</a></li>
+          <li><a href="#desplazamiento">Propiedades de desplazamiento</a></li>
+          <li><a href="#relativo">Posicionamiento relativo</a></li>
+          <li><a href="#absoluto">Posicionamiento absoluto</a></li>
+          <li><a href="#fijo">Posicionamiento fijo</a></li>
+          <li><a href="#sticky">Posicionamiento sticky</a></li>
+          <li><a href="#display">La propiedad display</a></li>
+          <li><a href="#visibility">La propiedad visibility</a></li>
+          <li><a href="#overflow">La propiedad overflow</a></li>
+          <li><a href="#z-index">Superposición y z-index</a></li>
+          <li><a href="#ancho-fijo">Diseño de ancho fijo</a></li>
+          <li><a href="#diseno-fluido">Diseño fluido</a></li>
+          <li><a href="#resumen">Resumen de propiedades</a></li>
+          <li><a href="#recursos">Recursos externos</a></li>
+        </ul>
+      </nav>
+
+      <section id="modelo-visual">
         <h2>Modelo de formato visual</h2>
         <p>
           El navegador representa los elementos de un documento HTML mediante cajas.
@@ -85,7 +97,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="flujo-normal">
         <h2>Flujo normal del documento</h2>
         <p>
           Si no se aplican reglas que alteren su distribución, los elementos participan
@@ -174,7 +186,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="position">
         <h2>La propiedad position</h2>
         <p>
           La propiedad <code>position</code> establece el esquema de posicionamiento de
@@ -233,7 +245,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="desplazamiento">
         <h2>Propiedades de desplazamiento</h2>
         <p>
           Las propiedades <code>top</code>, <code>right</code>, <code>bottom</code> y
@@ -277,7 +289,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="relativo">
         <h2>Posicionamiento relativo</h2>
         <p>
           Con <code>position: relative</code> la caja se coloca primero en su posición
@@ -343,7 +355,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="absoluto">
         <h2>Posicionamiento absoluto</h2>
         <p>
           Una caja con <code>position: absolute</code> deja de participar en el flujo
@@ -412,7 +424,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="fijo">
         <h2>Posicionamiento fijo</h2>
         <p>
           Una caja con <code>position: fixed</code> sale del flujo normal. En los casos
@@ -474,7 +486,7 @@
         </div>
       </section>
 
-      <section>
+      <section id="sticky">
         <h2>Posicionamiento sticky</h2>
         <p>
           <code>position: sticky</code> conserva la participación de la caja en el
@@ -540,7 +552,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="display">
         <h2>La propiedad display</h2>
         <p>
           La propiedad <code>display</code> determina el tipo de caja que genera un
@@ -557,7 +569,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="visibility">
         <h2>La propiedad visibility</h2>
         <p>
           <code>visibility</code> controla si la caja se dibuja, pero no elimina su
@@ -615,7 +627,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="overflow">
         <h2>La propiedad overflow</h2>
         <p>
           El contenido puede exceder las dimensiones de su caja cuando el contenedor
@@ -687,7 +699,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="z-index">
         <h2>Superposición y z-index</h2>
         <p>
           Cuando varias cajas ocupan una misma zona de la pantalla, el navegador debe
@@ -772,7 +784,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="ancho-fijo">
         <h2>Diseño de ancho fijo</h2>
         <p>
           Un diseño de ancho fijo utiliza una medida predeterminada para la zona
@@ -792,7 +804,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="diseno-fluido">
         <h2>Diseño fluido</h2>
         <p>
           Un diseño fluido utiliza medidas relativas para que las zonas de contenido
@@ -853,7 +865,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="resumen">
         <h2>Resumen de propiedades</h2>
         <table class="tabla-referencia">
           <thead>
@@ -891,7 +903,7 @@
         </table>
       </section>
 
-      <section>
+      <section id="recursos">
         <h2>Recursos externos</h2>
         <ul class="lista-recursos">
           <li>

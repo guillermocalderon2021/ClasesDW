@@ -22,40 +22,27 @@
 
   <div class="estructura">
 
-    <!-- INICIO NAVEGACIÓN — este bloque se reutiliza sin cambios en cada tema de la unidad -->
-    <nav class="navegacion-tema">
-      <h2>Temas de la unidad</h2>
+    <nav class="navegacion-tema" aria-label="Navegación del curso">
+      <h2>Clases de la unidad</h2>
       <ul class="lista-temas">
         <li class="activo">
-          <a href="flexbox.html">Flexbox</a>
+          <a href="flexbox.html" aria-current="page">Flexbox</a>
         </li>
-        <li class="pendiente">
-          <a href="#">Posicionamiento y visualización</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
+        <li>
+          <a href="posicionamiento-visualizacion.html">Posicionamiento y visualización</a>
         </li>
-        <li class="pendiente">
-          <a href="#">CSS Grid</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
+        <li>
+          <a href="formularios.html">Formularios</a>
         </li>
-        <li class="pendiente">
-          <a href="#">Diseño web responsivo</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
+        <li>
+          <a href="responsive-design.html">Diseño web responsivo</a>
         </li>
-        <li class="pendiente">
-          <a href="#">Media queries y contenido responsivo</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
-        </li>
-        <li class="pendiente">
-          <a href="#">Sistema de malla de Bootstrap</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
-        </li>
-        <li class="pendiente">
-          <a href="#">Utilidades y componentes de Bootstrap</a>
-          <span class="nota-pendiente">Contenido en preparación</span>
+        <li>
+          <a href="bootstrap.html">Fundamentos de Bootstrap</a>
+          <span class="nota-pendiente">Contenido pendiente</span>
         </li>
       </ul>
     </nav>
-    <!-- FIN NAVEGACIÓN -->
 
     <main class="contenido">
       <header>
@@ -63,7 +50,20 @@
         <p class="subtitulo">Unidad II — Desarrollo Web I</p>
       </header>
 
-      <section>
+      <nav class="indice-pagina" aria-labelledby="titulo-indice">
+        <h2 id="titulo-indice">En esta página</h2>
+        <ul>
+          <li><a href="#problema">El problema que resuelve Flexbox</a></li>
+          <li><a href="#modelo">El modelo de caja flexible</a></li>
+          <li><a href="#ejes">Los ejes de distribución</a></li>
+          <li><a href="#contenedor">Propiedades del contenedor</a></li>
+          <li><a href="#elementos">Propiedades de los elementos</a></li>
+          <li><a href="#aplicaciones">Aplicaciones frecuentes</a></li>
+          <li><a href="#recursos">Recursos externos</a></li>
+        </ul>
+      </nav>
+
+      <section id="problema">
         <h2>El problema que resuelve Flexbox</h2>
         <p>
           Antes de la introducción de Flexbox, las propiedades disponibles para
@@ -85,7 +85,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="modelo">
         <h2>El modelo de caja flexible</h2>
         <p>
           Flexbox es un modelo de diseño unidimensional: distribuye elementos a lo
@@ -142,7 +142,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="ejes">
         <h2>Los ejes de distribución</h2>
         <p>
           Dentro de un contenedor flexible, los elementos se distribuyen con
@@ -194,7 +194,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="contenedor">
         <h2>Propiedades del contenedor flexible</h2>
         <p>
           Las propiedades que se describen en esta sección se aplican al elemento
@@ -716,7 +716,7 @@
         </table>
       </section>
 
-      <section>
+      <section id="elementos">
         <h2>Propiedades de los elementos flexibles</h2>
         <p>
           A diferencia de las propiedades anteriores, las que se describen en esta
@@ -1016,7 +1016,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="aplicaciones">
         <h2>Aplicaciones frecuentes</h2>
         <p>
           Flexbox se utiliza con frecuencia para construir patrones de interfaz que
@@ -1141,7 +1141,7 @@
         </p>
       </section>
 
-      <section>
+      <section id="recursos">
         <h2>Recursos externos</h2>
         <ul class="lista-recursos">
           <li>
