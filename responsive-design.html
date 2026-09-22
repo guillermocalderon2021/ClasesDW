@@ -12,6 +12,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/monokai.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.css">
   <style>
+    .contenido {
+      width: 100%;
+      max-width: 1180px;
+    }
+
+    .contenido .panel-editor .CodeMirror {
+      height: 240px;
+    }
+
     .contenido .bloque-nota {
       max-width: 72ch;
       border-left: 3px solid var(--azul-esen);
@@ -53,14 +62,15 @@
     }
 
     .matriz-principios {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 0.8rem;
       max-width: 820px;
       margin: 1rem 0 1.5rem 0;
     }
 
     .matriz-principios article {
+      flex: 1 1 190px;
       border: 1px solid var(--gris-medio);
       border-radius: 5px;
       padding: 0.85rem 1rem;
@@ -78,14 +88,15 @@
     }
 
     .comparacion-codigo {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 1rem;
       max-width: 900px;
       margin: 1rem 0 1.4rem 0;
     }
 
     .comparacion-codigo > div {
+      flex: 1 1 360px;
       min-width: 0;
     }
 
@@ -104,12 +115,12 @@
 
     @media (max-width: 700px) {
       .comparacion-codigo {
-        grid-template-columns: 1fr;
+        flex-direction: column;
       }
     }
   </style>
 </head>
-<body>
+<body data-responsive-playgrounds>
 
   <header class="masthead">
     <span class="sigla">ESEN</span>
@@ -368,11 +379,11 @@ body {
       </section>
 
       <section id="layouts">
-        <h2>Layouts que se adaptan con Flexbox y Grid</h2>
+        <h2>Layouts que se adaptan con Flexbox</h2>
         <p>
-          Flexbox y Grid permiten resolver una parte importante del comportamiento
-          responsivo sin media queries. El primer recurso es permitir que los elementos
-          se ajusten o que la cuadrícula cree únicamente las columnas que caben.
+          Flexbox permite resolver una parte importante del comportamiento responsivo sin
+          media queries. El primer recurso es permitir que los elementos se contraigan y
+          pasen a una nueva fila cuando ya no disponen del espacio necesario.
         </p>
 
         <h3>Flexbox con flex-wrap</h3>
@@ -423,7 +434,7 @@ body {
           no pueden respetar su base de <code>180px</code>.
         </p>
 
-        <h3>Grid con auto-fit y minmax</h3>
+        <h3>Flexbox con una base flexible</h3>
         <div class="playground">
           <div class="titulo-playground">Ejemplo: número de columnas determinado por el espacio</div>
           <div class="paneles-editor">
@@ -446,12 +457,13 @@ body {
 }
 
 .catalogo {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
 .catalogo article {
+  flex: 1 1 180px;
   min-height: 80px;
   border: 1px solid #cfd4dc;
   border-radius: 6px;
@@ -468,9 +480,8 @@ body {
           </div>
         </div>
         <p>
-          <code>auto-fit</code> solicita tantas columnas como quepan y
-          <code>minmax(180px, 1fr)</code> establece el tamaño mínimo deseado antes de
-          reubicar un elemento en una nueva fila.
+          <code>flex: 1 1 180px</code> permite que cada tarjeta crezca y se contraiga,
+          usando <code>180px</code> como base antes de reubicarla en una nueva fila.
         </p>
       </section>
 
@@ -483,8 +494,12 @@ body {
 
         <pre class="codigo-bloque">@media (min-width: 700px) {
   .contenido {
-    grid-template-columns: 2fr 1fr;
+    display: flex;
+    gap: 1rem;
   }
+
+  .principal { flex: 2; }
+  .lateral { flex: 1; }
 }</pre>
 
         <p>
@@ -523,7 +538,8 @@ body {
 }
 
 .layout {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
@@ -535,8 +551,11 @@ aside {
 
 @media (min-width: 650px) {
   .layout {
-    grid-template-columns: 2fr 1fr;
+    flex-direction: row;
   }
+
+  .principal { flex: 2; }
+  aside { flex: 1; }
 }</textarea>
             </div>
           </div>
@@ -863,7 +882,8 @@ figcaption {
 }
 
 .tarjeta {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   border: 1px solid #cfd4dc;
   padding: 14px;
@@ -871,16 +891,19 @@ figcaption {
 
 .miniatura {
   min-height: 90px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #dfe8f5;
 }
 
 @container (min-width: 430px) {
   .tarjeta {
-    grid-template-columns: 140px 1fr;
+    flex-direction: row;
     align-items: center;
   }
+
+  .miniatura { flex: 0 0 140px; }
 }</textarea>
             </div>
           </div>
@@ -1030,7 +1053,7 @@ figcaption {
         <h2>Ejemplo integrador</h2>
         <p>
           El siguiente ejemplo combina una base mobile first, un contenedor fluido, navegación
-          adaptable, Grid, una imagen flexible y tipografía con <code>clamp()</code>. La media
+          adaptable, Flexbox, una imagen flexible y tipografía con <code>clamp()</code>. La media
           query se utiliza únicamente para cambiar la composición cuando existe espacio suficiente.
         </p>
 
@@ -1059,7 +1082,7 @@ figcaption {
   &lt;/section&gt;
 
   &lt;section class="servicios"&gt;
-    &lt;article&gt;&lt;h2&gt;Layout&lt;/h2&gt;&lt;p&gt;Flexbox y Grid permiten estructuras flexibles.&lt;/p&gt;&lt;/article&gt;
+    &lt;article&gt;&lt;h2&gt;Layout&lt;/h2&gt;&lt;p&gt;Flexbox permite construir estructuras flexibles.&lt;/p&gt;&lt;/article&gt;
     &lt;article&gt;&lt;h2&gt;Contenido&lt;/h2&gt;&lt;p&gt;Los breakpoints dependen de la composición.&lt;/p&gt;&lt;/article&gt;
     &lt;article&gt;&lt;h2&gt;Media&lt;/h2&gt;&lt;p&gt;Imágenes y videos respetan el espacio disponible.&lt;/p&gt;&lt;/article&gt;
   &lt;/section&gt;
@@ -1112,7 +1135,8 @@ nav a {
 }
 
 .hero {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   padding-block: clamp(2rem, 6vw, 5rem);
 }
@@ -1135,13 +1159,14 @@ nav a {
 }
 
 .servicios {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 14px;
   padding-bottom: 40px;
 }
 
 .servicios article {
+  flex: 1 1 180px;
   border: 1px solid #d7dce3;
   padding: 16px;
   border-radius: 8px;
@@ -1155,9 +1180,12 @@ nav a {
   }
 
   .hero {
-    grid-template-columns: 1.05fr 0.95fr;
+    flex-direction: row;
     align-items: center;
   }
+
+  .hero &gt; div { flex: 1.05; }
+  .hero img { flex: 0.95; min-width: 0; }
 }</textarea>
             </div>
           </div>
@@ -1174,7 +1202,7 @@ nav a {
           Cambie el breakpoint de <code>720px</code> y observe en qué punto la composición
           empieza a necesitar dos columnas. Después elimine temporalmente la media query.
           Note que la sección de servicios sigue siendo responsiva gracias a
-          <code>auto-fit</code> y <code>minmax()</code>.
+          <code>flex-wrap</code> y <code>flex-basis</code>.
         </p>
       </section>
 
@@ -1184,7 +1212,7 @@ nav a {
           <li>Declare correctamente el viewport.</li>
           <li>Construya HTML semántico con un orden lógico de lectura.</li>
           <li>Use una base fluida y limite los anchos máximos cuando sea necesario.</li>
-          <li>Utilice Flexbox y Grid para que la estructura se adapte antes de añadir media queries.</li>
+          <li>Utilice Flexbox para que la estructura se adapte antes de añadir media queries.</li>
           <li>Haga que imágenes, video e iframes respeten sus contenedores.</li>
           <li>Diseñe primero para el espacio estrecho y agregue cambios al crecer el viewport.</li>
           <li>Seleccione breakpoints a partir del contenido, no de modelos de dispositivo.</li>

@@ -41,6 +41,10 @@ function inicializarPlayground(contenedor) {
     return;
   }
 
+  if (document.body.hasAttribute('data-responsive-playgrounds')) {
+    prepararVistaResponsiva(contenedor, vista);
+  }
+
   var htmlInicial = areaHtml.value;
   var cssInicial = areaCss.value;
 
@@ -86,7 +90,9 @@ function inicializarPlayground(contenedor) {
 
   function actualizarVista() {
     var documento =
-      '<!DOCTYPE html><html><head><style>' +
+      '<!DOCTYPE html><html><head>' +
+      '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+      '<style>' +
       editorCss.getValue() +
       '</style></head><body>' +
       editorHtml.getValue() +
@@ -111,6 +117,71 @@ function inicializarPlayground(contenedor) {
   }
 
   actualizarVista();
+}
+
+/*
+  Añade un viewport independiente a las demostraciones de responsive design.
+  El marco puede ajustarse con los presets o arrastrando su esquina inferior derecha.
+*/
+function prepararVistaResponsiva(contenedor, vista) {
+  var panel = contenedor.querySelector('.panel-vista');
+  if (!panel || vista.parentElement.classList.contains('marco-vista-previa')) {
+    return;
+  }
+
+  var controles = document.createElement('div');
+  controles.className = 'controles-viewport';
+  controles.setAttribute('role', 'group');
+  controles.setAttribute('aria-label', 'Ancho de la vista previa');
+  controles.innerHTML =
+    '<span class="titulo-viewport">Probar viewport:</span>' +
+    '<button type="button" class="btn-viewport" data-ancho="375">Móvil · 375 px</button>' +
+    '<button type="button" class="btn-viewport" data-ancho="768">Tablet · 768 px</button>' +
+    '<button type="button" class="btn-viewport" data-ancho="completo">Escritorio</button>' +
+    '<output class="ancho-viewport" aria-live="polite"></output>';
+
+  var marco = document.createElement('div');
+  marco.className = 'marco-vista-previa';
+  marco.title = 'Arrastre la esquina inferior derecha para cambiar el ancho';
+
+  panel.insertBefore(controles, vista);
+  panel.insertBefore(marco, vista);
+  marco.appendChild(vista);
+
+  var botones = controles.querySelectorAll('.btn-viewport');
+  var salida = controles.querySelector('.ancho-viewport');
+
+  function actualizarIndicador() {
+    var ancho = Math.round(vista.getBoundingClientRect().width);
+    var anchoCompleto = Math.round(panel.getBoundingClientRect().width);
+    salida.value = ancho + ' px';
+    salida.textContent = ancho + ' px';
+
+    botones.forEach(function (boton) {
+      var objetivo = boton.dataset.ancho;
+      var activo = objetivo === 'completo'
+        ? Math.abs(ancho - anchoCompleto) <= 2
+        : Math.abs(ancho - Number(objetivo)) <= 2;
+      boton.setAttribute('aria-pressed', String(activo));
+    });
+  }
+
+  botones.forEach(function (boton) {
+    boton.addEventListener('click', function () {
+      marco.style.width = boton.dataset.ancho === 'completo'
+        ? '100%'
+        : boton.dataset.ancho + 'px';
+      window.requestAnimationFrame(actualizarIndicador);
+    });
+  });
+
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(actualizarIndicador).observe(marco);
+  } else {
+    window.addEventListener('resize', actualizarIndicador);
+  }
+
+  actualizarIndicador();
 }
 
 /*

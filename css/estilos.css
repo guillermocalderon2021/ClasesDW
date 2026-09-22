@@ -282,12 +282,13 @@ code {
 }
 
 .paneles-editor {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   background-color: #1e1e1e;
 }
 
 .panel-editor {
+  flex: 1 1 0;
+  min-width: 0;
   border-right: 1px solid #333;
 }
 
@@ -319,6 +320,59 @@ code {
   color: #55606e;
   padding: 0.4rem 0.9rem 0;
   background-color: var(--gris-claro);
+}
+
+.controles-viewport {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  background-color: var(--gris-claro);
+  border-bottom: 1px solid var(--gris-medio);
+}
+
+.controles-viewport .titulo-viewport {
+  margin-right: 0.25rem;
+  font-size: 0.78rem;
+  color: #45505d;
+}
+
+.btn-viewport {
+  padding: 0.28rem 0.6rem;
+  border: 1px solid var(--gris-medio);
+  border-radius: 4px;
+  color: var(--azul-esen);
+  background-color: var(--blanco);
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.btn-viewport:hover,
+.btn-viewport[aria-pressed="true"] {
+  border-color: var(--azul-esen);
+  background-color: #e8eef7;
+}
+
+.ancho-viewport {
+  min-width: 4.2rem;
+  margin-left: auto;
+  font-family: var(--fuente-codigo);
+  font-size: 0.76rem;
+  color: #45505d;
+  text-align: right;
+}
+
+.marco-vista-previa {
+  width: 100%;
+  min-width: min(280px, 100%);
+  max-width: 100%;
+  margin-inline: auto;
+  resize: horizontal;
+  overflow: hidden;
+  outline: 1px solid var(--gris-medio);
+  background-color: var(--blanco);
 }
 
 .vista-previa {
@@ -451,7 +505,7 @@ li.CodeMirror-hint-active {
   }
 
   .paneles-editor {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
   .panel-editor {
