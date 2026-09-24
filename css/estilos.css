@@ -263,6 +263,28 @@ code {
   margin: 0.9rem 0 1.2rem 0;
 }
 
+.bloque-codigo {
+  max-width: 100%;
+  margin: 0.75rem 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  border-radius: 5px;
+  background-color: #1e1e1e;
+  color: #f4f4f4;
+  font-family: var(--fuente-codigo);
+  font-size: 0.84rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.bloque-codigo .etiqueta-bloque {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: #b9c4d4;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.74rem;
+}
+
 /* Componente de ejemplo interactivo (playground) */
 
 .playground {
@@ -312,6 +334,12 @@ code {
 
 .panel-vista {
   border-top: 1px solid var(--gris-medio);
+}
+
+.zona-viewport {
+  max-width: 100%;
+  overflow: hidden;
+  background-color: #e5e7eb;
 }
 
 .panel-vista .etiqueta {
@@ -367,10 +395,10 @@ code {
 .marco-vista-previa {
   width: 100%;
   min-width: min(280px, 100%);
-  max-width: 100%;
   margin-inline: auto;
   resize: horizontal;
   overflow: hidden;
+  transform-origin: top left;
   outline: 1px solid var(--gris-medio);
   background-color: var(--blanco);
 }
@@ -381,6 +409,14 @@ code {
   border: none;
   display: block;
   background-color: var(--blanco);
+}
+
+.vista-previa--media {
+  height: 230px;
+}
+
+.vista-previa--alta {
+  height: 420px;
 }
 
 .controles-playground {

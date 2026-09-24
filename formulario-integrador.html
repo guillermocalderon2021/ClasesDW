@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ejemplo integrador de un formulario HTML con controles variados y validación nativa.">
+  <title>Inscripción al taller | Formulario integrador</title>
+  <link rel="stylesheet" href="css/formulario-integrador.css">
+</head>
+<body>
+  <main class="pagina-formulario">
+    <header class="encabezado">
+      <p class="etiqueta-superior">Desarrollo Web I · Ejemplo integrador</p>
+      <h1>Inscripción al taller de desarrollo web</h1>
+      <p class="introduccion">
+        Completa la información para reservar tu espacio. Los campos marcados con
+        <span aria-hidden="true">*</span> son obligatorios.
+      </p>
+    </header>
+
+    <form action="datos-enviados.html" method="post" class="formulario">
+      <input type="hidden" name="origen" value="formulario-integrador">
+
+      <fieldset>
+        <legend><span>1</span> Datos personales</legend>
+
+        <div class="grupo-campos">
+          <div class="campo campo-completo">
+            <label for="nombre">Nombre completo <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Ej. Andrea Martínez"
+              autocomplete="name"
+              minlength="3"
+              maxlength="60"
+              pattern="[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]{3,60}"
+              aria-describedby="ayuda-nombre"
+              required>
+            <small id="ayuda-nombre">Usa entre 3 y 60 letras; puedes incluir espacios, guiones y apóstrofes.</small>
+          </div>
+
+          <div class="campo">
+            <label for="correo">Correo electrónico <span aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              placeholder="nombre@ejemplo.com"
+              autocomplete="email"
+              required>
+          </div>
+
+          <div class="campo">
+            <label for="telefono">Teléfono <span aria-hidden="true">*</span></label>
+            <input
+              type="tel"
+              id="telefono"
+              name="telefono"
+              placeholder="7777-7777"
+              autocomplete="tel"
+              inputmode="tel"
+              pattern="[0-9]{4}-[0-9]{4}"
+              aria-describedby="ayuda-telefono"
+              required>
+            <small id="ayuda-telefono">Formato esperado: 7777-7777.</small>
+          </div>
+
+          <div class="campo">
+            <label for="fecha-nacimiento">Fecha de nacimiento <span aria-hidden="true">*</span></label>
+            <input
+              type="date"
+              id="fecha-nacimiento"
+              name="fecha_nacimiento"
+              min="1940-01-01"
+              max="2008-12-31"
+              required>
+          </div>
+
+          <div class="campo">
+            <label for="ciudad">Ciudad de residencia <span aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="ciudad"
+              name="ciudad"
+              list="lista-ciudades"
+              placeholder="Escribe o selecciona una ciudad"
+              autocomplete="address-level2"
+              required>
+            <datalist id="lista-ciudades">
+              <option value="San Salvador"></option>
+              <option value="Santa Ana"></option>
+              <option value="San Miguel"></option>
+              <option value="Santa Tecla"></option>
+              <option value="Antiguo Cuscatlán"></option>
+            </datalist>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>2</span> Preferencias del taller</legend>
+
+        <div class="grupo-campos">
+          <div class="campo">
+            <label for="nivel">Nivel actual <span aria-hidden="true">*</span></label>
+            <select id="nivel" name="nivel" required>
+              <option value="" selected disabled>Selecciona una opción</option>
+              <option value="principiante">Principiante</option>
+              <option value="intermedio">Intermedio</option>
+              <option value="avanzado">Avanzado</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="horario">Horario preferido <span aria-hidden="true">*</span></label>
+            <select id="horario" name="horario" required>
+              <option value="" selected disabled>Selecciona un horario</option>
+              <optgroup label="Entre semana">
+                <option value="martes-tarde">Martes · 4:00 p. m.</option>
+                <option value="jueves-noche">Jueves · 6:00 p. m.</option>
+              </optgroup>
+              <optgroup label="Fin de semana">
+                <option value="sabado-manana">Sábado · 9:00 a. m.</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="campo campo-completo">
+            <span class="titulo-control" id="titulo-modalidad">Modalidad <span aria-hidden="true">*</span></span>
+            <div class="opciones-en-linea" role="radiogroup" aria-labelledby="titulo-modalidad">
+              <label class="opcion">
+                <input type="radio" name="modalidad" value="presencial" required>
+                <span>Presencial</span>
+              </label>
+              <label class="opcion">
+                <input type="radio" name="modalidad" value="virtual">
+                <span>Virtual</span>
+              </label>
+              <label class="opcion">
+                <input type="radio" name="modalidad" value="hibrida">
+                <span>Híbrida</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="campo campo-completo">
+            <span class="titulo-control" id="titulo-temas">Temas de interés</span>
+            <div class="opciones-en-linea" aria-labelledby="titulo-temas">
+              <label class="opcion">
+                <input type="checkbox" name="temas" value="html">
+                <span>HTML semántico</span>
+              </label>
+              <label class="opcion">
+                <input type="checkbox" name="temas" value="css">
+                <span>CSS y layouts</span>
+              </label>
+              <label class="opcion">
+                <input type="checkbox" name="temas" value="accesibilidad">
+                <span>Accesibilidad</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="campo campo-completo">
+            <label for="experiencia">Experiencia aproximada (en meses)</label>
+            <input
+              type="range"
+              id="experiencia"
+              name="meses_experiencia"
+              min="0"
+              max="24"
+              value="6"
+              step="1">
+            <div class="extremos-rango" aria-hidden="true"><span>0</span><span>24</span></div>
+          </div>
+
+          <div class="campo">
+            <label for="color">Color para tu gafete</label>
+            <input type="color" id="color" name="color_gafete" value="#2457c5">
+          </div>
+
+          <div class="campo">
+            <label for="sitio-web">Portafolio o sitio web</label>
+            <input
+              type="url"
+              id="sitio-web"
+              name="sitio_web"
+              placeholder="https://misitio.com"
+              autocomplete="url">
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span>3</span> Información adicional</legend>
+
+        <div class="grupo-campos">
+          <div class="campo campo-completo">
+            <label for="comentarios">¿Qué esperas aprender?</label>
+            <textarea
+              id="comentarios"
+              name="comentarios"
+              rows="5"
+              maxlength="400"
+              placeholder="Cuéntanos brevemente tus objetivos..."></textarea>
+            <small>Máximo 400 caracteres.</small>
+          </div>
+
+          <div class="campo campo-completo">
+            <label for="archivo">Adjunta una muestra de tu trabajo</label>
+            <input
+              type="file"
+              id="archivo"
+              name="archivo"
+              accept=".pdf,.png,.jpg,.jpeg"
+              aria-describedby="ayuda-archivo">
+            <small id="ayuda-archivo">Formatos aceptados: PDF, PNG o JPG.</small>
+          </div>
+
+          <label class="aceptacion campo-completo">
+            <input type="checkbox" name="acepta_condiciones" value="si" required>
+            <span>Acepto las condiciones de participación y el uso de mis datos para gestionar esta inscripción. <strong aria-hidden="true">*</strong></span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="acciones">
+        <button type="reset" class="boton boton-secundario">Limpiar formulario</button>
+        <button type="submit" class="boton boton-primario">Enviar inscripción</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

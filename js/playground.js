@@ -41,7 +41,8 @@ function inicializarPlayground(contenedor) {
     return;
   }
 
-  if (document.body.hasAttribute('data-responsive-playgrounds')) {
+  if (document.body.hasAttribute('data-responsive-playgrounds') ||
+      contenedor.dataset.redimensionable === 'true') {
     prepararVistaResponsiva(contenedor, vista);
   }
 
@@ -89,13 +90,30 @@ function inicializarPlayground(contenedor) {
   var temporizador = null;
 
   function actualizarVista() {
+    var librerias = (contenedor.dataset.libs || '').split(/\s+/);
+    var cabeceraExterna = '';
+    var scriptsExternos = '';
+
+    if (librerias.indexOf('bootstrap') !== -1) {
+      cabeceraExterna +=
+        '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" ' +
+        'integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" ' +
+        'crossorigin="anonymous">';
+      scriptsExternos +=
+        '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" ' +
+        'integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" ' +
+        'crossorigin="anonymous"><\/script>';
+    }
+
     var documento =
       '<!DOCTYPE html><html><head>' +
       '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+      cabeceraExterna +
       '<style>' +
       editorCss.getValue() +
       '</style></head><body>' +
       editorHtml.getValue() +
+      scriptsExternos +
       '</body></html>';
     vista.srcdoc = documento;
   }
@@ -129,38 +147,73 @@ function prepararVistaResponsiva(contenedor, vista) {
     return;
   }
 
+  var anchoMaximo = Number(
+    contenedor.dataset.anchoMaximo ||
+    document.body.dataset.anchoMaximoPlaygrounds
+  );
+  var presets = obtenerPresets(contenedor.dataset.viewports);
+
+  if (anchoMaximo > 0 && !presets.some(function (preset) {
+    return Number(preset.ancho) === anchoMaximo;
+  })) {
+    presets.push({
+      ancho: String(anchoMaximo),
+      etiqueta: 'Máximo · ' + anchoMaximo + ' px'
+    });
+  }
+
+  var botonesHtml = presets.map(function (preset) {
+    return '<button type="button" class="btn-viewport" data-ancho="' +
+      preset.ancho + '">' + preset.etiqueta + '</button>';
+  }).join('');
+
   var controles = document.createElement('div');
   controles.className = 'controles-viewport';
   controles.setAttribute('role', 'group');
   controles.setAttribute('aria-label', 'Ancho de la vista previa');
   controles.innerHTML =
     '<span class="titulo-viewport">Probar viewport:</span>' +
-    '<button type="button" class="btn-viewport" data-ancho="375">Móvil · 375 px</button>' +
-    '<button type="button" class="btn-viewport" data-ancho="768">Tablet · 768 px</button>' +
-    '<button type="button" class="btn-viewport" data-ancho="completo">Escritorio</button>' +
+    botonesHtml +
+    '<button type="button" class="btn-viewport" data-ancho="completo">Ajustar al panel</button>' +
     '<output class="ancho-viewport" aria-live="polite"></output>';
+
+  var zona = document.createElement('div');
+  zona.className = 'zona-viewport';
 
   var marco = document.createElement('div');
   marco.className = 'marco-vista-previa';
   marco.title = 'Arrastre la esquina inferior derecha para cambiar el ancho';
+  if (anchoMaximo > 0) {
+    marco.style.maxWidth = anchoMaximo + 'px';
+  }
 
   panel.insertBefore(controles, vista);
-  panel.insertBefore(marco, vista);
+  panel.insertBefore(zona, vista);
+  zona.appendChild(marco);
   marco.appendChild(vista);
 
   var botones = controles.querySelectorAll('.btn-viewport');
   var salida = controles.querySelector('.ancho-viewport');
 
   function actualizarIndicador() {
-    var ancho = Math.round(vista.getBoundingClientRect().width);
-    var anchoCompleto = Math.round(panel.getBoundingClientRect().width);
-    salida.value = ancho + ' px';
-    salida.textContent = ancho + ' px';
+    var ancho = Math.round(marco.offsetWidth);
+    var anchoDisponible = Math.round(zona.clientWidth);
+    var escala = ancho > 0 ? Math.min(1, anchoDisponible / ancho) : 1;
+    var textoEscala = escala < 0.999
+      ? ' · vista al ' + Math.round(escala * 100) + '%'
+      : '';
+
+    marco.style.transform = escala < 0.999
+      ? 'scale(' + escala + ')'
+      : 'none';
+    zona.style.height = Math.ceil(marco.offsetHeight * escala) + 'px';
+    salida.value = ancho + ' px' + textoEscala;
+    salida.textContent = ancho + ' px' + textoEscala;
 
     botones.forEach(function (boton) {
       var objetivo = boton.dataset.ancho;
       var activo = objetivo === 'completo'
-        ? Math.abs(ancho - anchoCompleto) <= 2
+        ? Math.abs(ancho - anchoDisponible) <= 2
         : Math.abs(ancho - Number(objetivo)) <= 2;
       boton.setAttribute('aria-pressed', String(activo));
     });
@@ -175,13 +228,40 @@ function prepararVistaResponsiva(contenedor, vista) {
     });
   });
 
+  var anchoInicial = contenedor.dataset.anchoInicial;
+  if (anchoInicial) {
+    marco.style.width = anchoInicial + 'px';
+  }
+
   if ('ResizeObserver' in window) {
     new ResizeObserver(actualizarIndicador).observe(marco);
+    new ResizeObserver(actualizarIndicador).observe(zona);
   } else {
     window.addEventListener('resize', actualizarIndicador);
   }
 
   actualizarIndicador();
+}
+
+function obtenerPresets(configuracion) {
+  if (!configuracion) {
+    return [
+      { ancho: '375', etiqueta: 'Móvil · 375 px' },
+      { ancho: '768', etiqueta: 'Tablet · 768 px' }
+    ];
+  }
+
+  return configuracion.split(',').map(function (elemento) {
+    var partes = elemento.trim().split(':');
+    var ancho = partes.shift();
+    var nombre = partes.join(':');
+    return {
+      ancho: ancho,
+      etiqueta: nombre ? nombre + ' · ' + ancho + ' px' : ancho + ' px'
+    };
+  }).filter(function (preset) {
+    return /^\d+$/.test(preset.ancho);
+  });
 }
 
 /*

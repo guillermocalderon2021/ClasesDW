@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fundamentos de Bootstrap | Desarrollo Web I</title>
+  <title>Bootstrap — Desarrollo Web I, Unidad II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/monokai.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.css">
 </head>
-<body>
+<body data-responsive-playgrounds data-ancho-maximo-playgrounds="1250">
 
   <header class="masthead">
     <span class="sigla">ESEN</span>
@@ -19,6 +22,7 @@
 
   <div class="estructura">
 
+    <!-- INICIO NAVEGACIÓN — este bloque se reutiliza sin cambios en cada tema de la unidad -->
     <nav class="navegacion-tema" aria-label="Navegación del curso">
       <h2>Clases de la unidad</h2>
       <ul class="lista-temas">
@@ -36,10 +40,10 @@
         </li>
         <li class="activo">
           <a href="bootstrap.html" aria-current="page">Fundamentos de Bootstrap</a>
-          <span class="nota-pendiente">Contenido pendiente</span>
         </li>
       </ul>
     </nav>
+    <!-- FIN NAVEGACIÓN -->
 
     <main class="contenido">
       <header>
@@ -47,16 +51,688 @@
         <p class="subtitulo">Unidad II — Desarrollo Web I</p>
       </header>
 
-      <section>
-        <h2>Contenido pendiente</h2>
+      <nav class="indice-pagina" aria-label="Contenido de la clase">
+        <h2>Contenido de la clase</h2>
+        <ul>
+          <li><a href="#fundamentos">Qué aporta Bootstrap</a></li>
+          <li><a href="#mobile-first">Enfoque mobile first</a></li>
+          <li><a href="#contenedores">Contenedores</a></li>
+          <li><a href="#rejilla">Rejilla y breakpoints</a></li>
+          <li><a href="#utilidades">Utilidades responsivas</a></li>
+          <li><a href="#botones">Botones</a></li>
+          <li><a href="#tablas">Tablas responsivas</a></li>
+          <li><a href="#navbar">Barra de navegación</a></li>
+          <li><a href="#tarjetas">Tarjetas</a></li>
+          <li><a href="#media">Imágenes y proporciones</a></li>
+          <li><a href="#pruebas">Pruebas y depuración</a></li>
+          <li><a href="#recursos">Recursos externos</a></li>
+        </ul>
+      </nav>
+
+      <section id="fundamentos">
+        <h2>Un framework CSS construido sobre los mecanismos ya estudiados</h2>
         <p>
-          Esta clase se encuentra en preparación. El contenido se publicará
-          próximamente.
+          Bootstrap es un framework CSS de código abierto que ofrece un sistema de
+          rejilla, una colección de componentes de interfaz y un conjunto extenso de
+          clases de utilidad. Su propósito es acelerar la construcción de sitios
+          responsivos evitando que cada proyecto deba resolver desde cero problemas
+          de distribución y de adaptación a distintos tamaños de pantalla que ya
+          fueron estudiados mediante Flexbox, CSS Grid y las media queries.
+        </p>
+        <p>
+          Es importante notar que Bootstrap no reemplaza a CSS: internamente, sus
+          clases están construidas con las mismas propiedades vistas hasta ahora. Un
+          uso adecuado del framework requiere comprender qué hace cada clase, en
+          lugar de aplicarla por ensayo y error.
+        </p>
+        <p>
+          La incorporación más sencilla de Bootstrap a un proyecto consiste en
+          enlazar su hoja de estilos y, cuando se utilicen componentes con
+          comportamiento propio (como los que se presentan más adelante), su paquete
+          de JavaScript, ambos distribuidos mediante un CDN.
+        </p>
+        <div class="bloque-codigo">
+          <span class="etiqueta-bloque">Dentro de &lt;head&gt;</span>
+          &lt;link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"&gt;
+        </div>
+        <div class="bloque-codigo">
+          <span class="etiqueta-bloque">Antes de cerrar &lt;/body&gt;</span>
+          &lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"&gt;&lt;/script&gt;
+        </div>
+      </section>
+
+      <section id="mobile-first">
+        <h2>Bootstrap trabaja con un enfoque mobile first</h2>
+        <p>
+          Las reglas sin infijo se aplican desde el viewport más pequeño y continúan
+          activas en los tamaños mayores. Los infijos <code>sm</code>, <code>md</code>,
+          <code>lg</code>, <code>xl</code> y <code>xxl</code> agregan o reemplazan un
+          comportamiento a partir de una anchura mínima. Por eso
+          <code>col-12 col-md-6 col-xl-4</code> se lee de izquierda a derecha como una
+          progresión: ancho completo inicialmente, mitad desde <code>md</code> y un
+          tercio desde <code>xl</code>.
+        </p>
+        <table class="tabla-referencia">
+          <thead>
+            <tr>
+              <th>Clase</th>
+              <th>Desde</th>
+              <th>Comportamiento que permanece activo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>col-12</code></td><td>0 px (xs)</td><td>12 de 12 columnas</td></tr>
+            <tr><td><code>col-sm-6</code></td><td>576 px</td><td>6 de 12 columnas</td></tr>
+            <tr><td><code>col-md-4</code></td><td>768 px</td><td>4 de 12 columnas</td></tr>
+            <tr><td><code>col-lg-3</code></td><td>992 px</td><td>3 de 12 columnas</td></tr>
+            <tr><td><code>col-xl-2</code></td><td>1200 px</td><td>2 de 12 columnas</td></tr>
+            <tr><td><code>col-xxl-1</code></td><td>1400 px</td><td>1 de 12 columnas</td></tr>
+          </tbody>
+        </table>
+        <p class="nota-instruccion">
+          Los nombres <code>sm</code> o <code>lg</code> no describen un dispositivo
+          concreto. Describen rangos de anchura CSS. Elija el cambio según el espacio
+          que necesita el contenido, no según una marca de teléfono o tableta.
         </p>
       </section>
+
+      <section id="contenedores">
+        <h2>Contenedores</h2>
+        <p>
+          Todo el contenido que utiliza el sistema de rejilla de Bootstrap debe
+          ubicarse dentro de un contenedor. La clase <code>container</code> centra el
+          contenido y le asigna una anchura máxima distinta en cada punto de quiebre;
+          la clase <code>container-fluid</code>, en cambio, ocupa siempre la totalidad
+          del ancho disponible.
+        </p>
+
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,768:md,1200:xl">
+          <div class="titulo-playground">Ejemplo: container frente a container-fluid</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="container bg-light border mb-3"&gt;
+  .container
+&lt;/div&gt;
+
+&lt;div class="container-fluid bg-warning-subtle border"&gt;
+  .container-fluid
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">/* En este ejemplo no se necesita CSS adicional:
+   el efecto se produce únicamente con las clases
+   de Bootstrap aplicadas en el HTML. */</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa" title="Resultado del ejemplo de contenedores"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Arrastre la esquina inferior derecha del panel de resultado, o utilice los
+          botones de anchura, para observar que <code>.container</code> deja un
+          margen creciente a los lados a partir de cierta anchura, mientras que
+          <code>.container-fluid</code> ocupa siempre todo el espacio disponible.
+        </p>
+      </section>
+
+      <section id="rejilla">
+        <h2>Sistema de rejilla y puntos de quiebre</h2>
+        <p>
+          Dentro de un contenedor, las filas, creadas con la clase <code>row</code>,
+          agrupan horizontalmente a las columnas. Cada fila se divide en 12 unidades,
+          y una columna declara cuántas de esas 12 unidades ocupa mediante clases
+          como <code>col-4</code> u <code>col-md-4</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 600 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sistema de rejilla de 12 columnas de Bootstrap">
+<text x="10.0" y="16.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#123B7A" text-anchor="start">Una fila (row) se divide en 12 columnas</text>
+<rect x="10.0" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="32.3" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">1</text>
+<rect x="58.7" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="81.0" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">2</text>
+<rect x="107.3" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="129.7" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">3</text>
+<rect x="156.0" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="178.3" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">4</text>
+<rect x="204.7" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="227.0" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">5</text>
+<rect x="253.3" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="275.7" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">6</text>
+<rect x="302.0" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="324.3" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">7</text>
+<rect x="350.7" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="373.0" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">8</text>
+<rect x="399.3" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="421.7" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">9</text>
+<rect x="448.0" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="470.3" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">10</text>
+<rect x="496.7" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="519.0" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">11</text>
+<rect x="545.3" y="24.0" width="44.7" height="32.0" rx="3" fill="#123B7A"/>
+<text x="567.7" y="44.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="white" text-anchor="middle">12</text>
+<text x="10.0" y="76.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#123B7A" text-anchor="start">Tres columnas con la clase col-md-4 (4 + 4 + 4 = 12)</text>
+<rect x="10.0" y="86.0" width="190.7" height="42.0" rx="3" fill="#C8AD55"/>
+<text x="105.3" y="111.0" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#2B2B2B" text-anchor="middle">col-md-4</text>
+<rect x="204.7" y="86.0" width="190.7" height="42.0" rx="3" fill="#C8AD55"/>
+<text x="300.0" y="111.0" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#2B2B2B" text-anchor="middle">col-md-4</text>
+<rect x="399.3" y="86.0" width="190.7" height="42.0" rx="3" fill="#C8AD55"/>
+<text x="494.7" y="111.0" font-family="IBM Plex Mono, monospace" font-size="12.5" fill="#2B2B2B" text-anchor="middle">col-md-4</text>
+</svg>
+
+        <p>
+          Una clase de columna sin infijo, como <code>col-4</code>, se aplica a
+          partir de cualquier anchura. Al agregar un infijo correspondiente a un
+          punto de quiebre, como en <code>col-md-4</code>, la regla solo se activa a
+          partir de dicho punto de quiebre en adelante. Esto permite declarar
+          distintos comportamientos según el tamaño de pantalla combinando varias
+          clases en un mismo elemento, como en <code>col-12 col-md-4</code>.
+        </p>
+
+        <svg class="diagrama-concepto" viewBox="0 0 620 88" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Escala de puntos de quiebre de Bootstrap">
+<text x="10.0" y="16.0" font-family="IBM Plex Sans, sans-serif" font-size="12.5" fill="#123B7A" text-anchor="start">Puntos de quiebre de Bootstrap (anchura mínima de cada nivel)</text>
+<rect x="10.0" y="30.0" width="203.3" height="46.0" rx="3" fill="#F3F4F6"/>
+<text x="111.6" y="50.0" font-family="IBM Plex Mono, monospace" font-size="13" fill="#2B2B2B" text-anchor="middle">xs</text>
+<text x="111.6" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#2B2B2B" text-anchor="middle">&lt; 576 px</text>
+<rect x="213.3" y="30.0" width="67.8" height="46.0" rx="3" fill="#dfe6f0"/>
+<text x="247.2" y="50.0" font-family="IBM Plex Mono, monospace" font-size="13" fill="#2B2B2B" text-anchor="middle">sm</text>
+<text x="247.2" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#2B2B2B" text-anchor="middle">≥ 576 px</text>
+<rect x="281.1" y="30.0" width="79.1" height="46.0" rx="3" fill="#c3d2e8"/>
+<text x="320.6" y="50.0" font-family="IBM Plex Mono, monospace" font-size="13" fill="#2B2B2B" text-anchor="middle">md</text>
+<text x="320.6" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="#2B2B2B" text-anchor="middle">≥ 768 px</text>
+<rect x="360.1" y="30.0" width="73.4" height="46.0" rx="3" fill="#9db8db"/>
+<text x="396.8" y="50.0" font-family="IBM Plex Mono, monospace" font-size="13" fill="white" text-anchor="middle">lg</text>
+<text x="396.8" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="white" text-anchor="middle">≥ 992 px</text>
+<rect x="433.5" y="30.0" width="70.6" height="46.0" rx="3" fill="#C8AD55"/>
+<text x="468.8" y="50.0" font-family="IBM Plex Mono, monospace" font-size="13" fill="white" text-anchor="middle">xl</text>
+<text x="468.8" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="white" text-anchor="middle">≥ 1200 px</text>
+<rect x="504.1" y="30.0" width="105.9" height="46.0" rx="3" fill="#b89642"/>
+<text x="557.1" y="50.0" font-family="IBM Plex Mono, monospace" font-size="13" fill="white" text-anchor="middle">xxl</text>
+<text x="557.1" y="66.0" font-family="IBM Plex Sans, sans-serif" font-size="10.5" fill="white" text-anchor="middle">≥ 1400 px</text>
+</svg>
+
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,576:sm,768:md,992:lg,1200:xl" data-ancho-inicial="375">
+          <div class="titulo-playground">Ejemplo: columnas que se apilan según el punto de quiebre</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-12 col-md-4"&gt;
+      &lt;div class="bg-primary text-white p-3 text-center"&gt;
+        col-12 col-md-4
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-12 col-md-4"&gt;
+      &lt;div class="bg-primary text-white p-3 text-center"&gt;
+        col-12 col-md-4
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col-12 col-md-4"&gt;
+      &lt;div class="bg-primary text-white p-3 text-center"&gt;
+        col-12 col-md-4
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">.row {
+  row-gap: 0.5rem;
+}</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa" title="Resultado del ejemplo de rejilla"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Con una anchura menor a 768px, las tres columnas ocupan el ancho completo y
+          se apilan verticalmente, porque solo se cumple la condición de
+          <code>col-12</code>. Arrastre el asa hacia la derecha hasta superar 768px, o
+          utilice el botón correspondiente, y observe que las tres columnas pasan a
+          distribuirse en una sola fila al activarse <code>col-md-4</code>.
+        </p>
+      </section>
+
+      <section id="utilidades">
+        <h2>Utilidades responsivas: display, orden y espaciado</h2>
+        <p>
+          El mismo patrón de infijos se usa fuera de la rejilla. Una utilidad sin
+          infijo establece la regla inicial y otra con infijo la modifica desde un
+          breakpoint. Por ejemplo, <code>d-none d-md-block</code> oculta un elemento
+          inicialmente y lo muestra desde <code>md</code>; <code>flex-column
+          flex-lg-row</code> cambia la dirección de un contenedor flexible desde
+          <code>lg</code>.
+        </p>
+        <table class="tabla-referencia">
+          <thead><tr><th>Objetivo</th><th>Ejemplos</th><th>Lectura</th></tr></thead>
+          <tbody>
+            <tr><td>Display</td><td><code>d-none d-md-block</code></td><td>Oculto hasta 768 px</td></tr>
+            <tr><td>Flexbox</td><td><code>d-flex flex-column flex-lg-row</code></td><td>Columna; fila desde 992 px</td></tr>
+            <tr><td>Orden</td><td><code>order-2 order-md-1</code></td><td>Segundo; primero desde 768 px</td></tr>
+            <tr><td>Espaciado</td><td><code>p-2 p-md-4</code></td><td>Menos relleno en móvil</td></tr>
+            <tr><td>Alineación</td><td><code>text-center text-md-start</code></td><td>Centrado; a la izquierda desde 768 px</td></tr>
+          </tbody>
+        </table>
+
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,768:md,992:lg" data-ancho-inicial="375">
+          <div class="titulo-playground">Ejemplo: utilidades que cambian en md y lg</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="d-flex flex-column flex-lg-row gap-2 p-2 p-md-4"&gt;
+  &lt;div class="order-2 order-md-1 p-3 bg-primary text-white"&gt;
+    Contenido principal
+  &lt;/div&gt;
+  &lt;aside class="order-1 order-md-2 p-3 bg-warning-subtle"&gt;
+    Contenido complementario
+  &lt;/aside&gt;
+&lt;/div&gt;
+&lt;p class="d-none d-md-block px-4 text-success"&gt;
+  Este mensaje aparece desde el breakpoint md.
+&lt;/p&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">/* Las variaciones se resuelven con utilidades de Bootstrap. */</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa" title="Resultado del ejemplo de utilidades responsivas"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Compare 375, 768 y 992 px. Observe por separado el cambio de orden, la
+          aparición del mensaje, el aumento del relleno y el paso de columna a fila.
+          Evite ocultar con <code>d-none</code> información indispensable para completar
+          una tarea.
+        </p>
+      </section>
+
+      <section id="botones">
+        <h2>Botones</h2>
+        <p>
+          La clase <code>btn</code> aplica el estilo base de un botón, y debe
+          combinarse con una clase de color semántico, como <code>btn-primary</code>,
+          <code>btn-secondary</code>, <code>btn-success</code>,
+          <code>btn-danger</code> o <code>btn-warning</code>, entre otras. Anteponer
+          <code>btn-outline-</code> al color produce la misma semántica con un estilo
+          de contorno. El tamaño se ajusta con <code>btn-lg</code> o
+          <code>btn-sm</code>.
+        </p>
+
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,768:md" data-ancho-inicial="375">
+          <div class="titulo-playground">Ejemplo: grupo de botones que se adapta al espacio disponible</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="container py-3"&gt;
+  &lt;div class="d-grid gap-2 d-md-flex justify-content-md-end"&gt;
+    &lt;button type="button" class="btn btn-outline-secondary"&gt;
+      Cancelar
+    &lt;/button&gt;
+    &lt;button type="button" class="btn btn-primary"&gt;
+      Guardar cambios
+    &lt;/button&gt;
+    &lt;button type="button" class="btn btn-success"&gt;
+      Confirmar
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">/* En este ejemplo no se necesita CSS adicional. */</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa" title="Resultado del ejemplo de botones"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          La clase <code>d-grid</code> apila los botones a todo lo ancho en
+          pantallas pequeñas, mientras que <code>d-md-flex</code> los coloca en una
+          sola fila a partir del punto de quiebre <code>md</code>. Cambie
+          <code>btn-primary</code> por <code>btn-outline-primary</code> en el botón
+          central y observe la diferencia entre ambos estilos.
+        </p>
+      </section>
+
+      <section id="tablas">
+        <h2>Tablas</h2>
+        <p>
+          La clase <code>table</code> aplica el estilo base de Bootstrap sobre un
+          elemento <code>table</code>. Puede combinarse con <code>table-striped</code>
+          para alternar el color de las filas, con <code>table-bordered</code> para
+          mostrar bordes en todas las celdas, y con clases contextuales como
+          <code>table-success</code>, <code>table-warning</code> o
+          <code>table-danger</code> aplicadas a una fila o a una celda específica.
+        </p>
+
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,768:md" data-ancho-inicial="375">
+          <div class="titulo-playground">Ejemplo: tabla responsiva con desplazamiento horizontal</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="table-responsive"&gt;
+  &lt;table class="table table-striped table-bordered"&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Estudiante&lt;/th&gt;
+        &lt;th&gt;Guía 1&lt;/th&gt;
+        &lt;th&gt;Guía 2&lt;/th&gt;
+        &lt;th&gt;Guía 3&lt;/th&gt;
+        &lt;th&gt;Guía 4&lt;/th&gt;
+        &lt;th&gt;Estado&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr class="table-success"&gt;
+        &lt;td&gt;María Landaverde&lt;/td&gt;
+        &lt;td&gt;9.0&lt;/td&gt;
+        &lt;td&gt;8.5&lt;/td&gt;
+        &lt;td&gt;9.5&lt;/td&gt;
+        &lt;td&gt;9.0&lt;/td&gt;
+        &lt;td&gt;Al día&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr class="table-warning"&gt;
+        &lt;td&gt;Diego Portillo&lt;/td&gt;
+        &lt;td&gt;7.0&lt;/td&gt;
+        &lt;td&gt;6.5&lt;/td&gt;
+        &lt;td&gt;—&lt;/td&gt;
+        &lt;td&gt;—&lt;/td&gt;
+        &lt;td&gt;Pendiente&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Ana Beatriz Cruz&lt;/td&gt;
+        &lt;td&gt;8.0&lt;/td&gt;
+        &lt;td&gt;8.0&lt;/td&gt;
+        &lt;td&gt;7.5&lt;/td&gt;
+        &lt;td&gt;8.5&lt;/td&gt;
+        &lt;td&gt;Al día&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">/* En este ejemplo no se necesita CSS adicional. */</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa vista-previa--media" title="Resultado del ejemplo de tabla responsiva"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Con una anchura reducida, la tabla no se comprime ni oculta columnas: el
+          elemento <code>table-responsive</code> le agrega una barra de
+          desplazamiento horizontal propia, de modo que el resto de la página no se
+          ve afectada. Aumente la anchura del marco y observe en qué punto la barra
+          de desplazamiento deja de ser necesaria.
+        </p>
+      </section>
+
+      <section id="navbar">
+        <h2>Barra de navegación</h2>
+        <p>
+          El componente <code>navbar</code> se combina con una clase
+          <code>navbar-expand-*</code> que indica a partir de qué punto de quiebre se
+          muestra expandida; por debajo de dicho punto, los enlaces se ocultan
+          detrás de un botón de tipo hamburguesa. Este es el primer componente de la
+          clase cuyo comportamiento depende del paquete de JavaScript de Bootstrap, y
+          no únicamente de su hoja de estilos.
+        </p>
+
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,768:md,992:lg" data-ancho-inicial="375">
+          <div class="titulo-playground">Ejemplo: navbar-expand-md</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;nav class="navbar navbar-expand-md navbar-dark bg-primary"&gt;
+  &lt;div class="container-fluid"&gt;
+    &lt;a class="navbar-brand" href="#"&gt;Desarrollo Web I&lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+      aria-controls="menuPrincipal" aria-expanded="false"
+      aria-label="Mostrar u ocultar navegación"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="menuPrincipal"&gt;
+      &lt;ul class="navbar-nav ms-auto"&gt;
+        &lt;li class="nav-item"&gt;
+          &lt;a class="nav-link active" href="#"&gt;Inicio&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="nav-item"&gt;
+          &lt;a class="nav-link" href="#"&gt;Guías&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="nav-item"&gt;
+          &lt;a class="nav-link" href="#"&gt;Recursos&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">/* En este ejemplo no se necesita CSS adicional. */</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa vista-previa--media" title="Resultado del ejemplo de barra de navegación"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Con una anchura menor a 768px, los enlaces se ocultan y aparece el botón
+          de hamburguesa; al hacer clic sobre él, el menú se despliega hacia abajo.
+          Aumente la anchura del marco hasta superar 768px y observe que los enlaces
+          se muestran directamente en la barra, sin necesidad del botón. Cambie
+          <code>navbar-expand-md</code> por <code>navbar-expand-lg</code> y repita la
+          prueba para notar que el punto de quiebre de la transición cambia.
+        </p>
+      </section>
+
+      <section id="tarjetas">
+        <h2>Tarjetas</h2>
+        <p>
+          El componente <code>card</code> agrupa contenido relacionado dentro de un
+          contenedor con borde. Para distribuir varias tarjetas de forma responsiva,
+          se combinan con la clase <code>row</code> y con <code>row-cols-*</code>,
+          que definen cuántas tarjetas se muestran por fila en cada punto de quiebre.
+        </p>
+
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,768:md,992:lg,1200:xl" data-ancho-inicial="375">
+          <div class="titulo-playground">Ejemplo: row-cols-1 row-cols-md-2 row-cols-lg-4</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="container py-2"&gt;
+  &lt;div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3"&gt;
+    &lt;div class="col"&gt;
+      &lt;div class="card h-100"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Guía 1&lt;/h5&gt;
+          &lt;p class="card-text"&gt;HTML y CSS básico.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+      &lt;div class="card h-100"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Guía 2&lt;/h5&gt;
+          &lt;p class="card-text"&gt;CSS avanzado y formularios.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+      &lt;div class="card h-100"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Guía 3&lt;/h5&gt;
+          &lt;p class="card-text"&gt;Posicionamiento y Flexbox.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="col"&gt;
+      &lt;div class="card h-100"&gt;
+        &lt;div class="card-body"&gt;
+          &lt;h5 class="card-title"&gt;Guía 4&lt;/h5&gt;
+          &lt;p class="card-text"&gt;Grid, responsive y Bootstrap.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">/* En este ejemplo no se necesita CSS adicional. */</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa vista-previa--alta" title="Resultado del ejemplo de tarjetas"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Reduzca la anchura del marco y observe que las cuatro tarjetas se apilan
+          en una sola columna. Auméntela hasta superar 768px para ver dos tarjetas
+          por fila, y hasta superar 992px para ver las cuatro en una sola fila. El
+          número que sigue a <code>row-cols-</code> indica directamente cuántos
+          elementos se distribuyen por fila.
+        </p>
+      </section>
+
+      <section id="media">
+        <h2>Imágenes fluidas y contenido con proporción</h2>
+        <p>
+          Una imagen con dimensiones intrínsecas mayores que su contenedor puede
+          provocar desbordamiento. La clase <code>img-fluid</code> aplica
+          <code>max-width: 100%</code> y <code>height: auto</code>, de modo que la
+          imagen se reduce sin deformarse. Para video, mapas o contenido embebido,
+          <code>ratio</code> reserva una proporción estable como
+          <code>ratio-16x9</code>, <code>ratio-4x3</code> o <code>ratio-1x1</code>.
+        </p>
+        <div class="playground" data-libs="bootstrap" data-redimensionable="true" data-viewports="375:Móvil,768:md" data-ancho-inicial="375">
+          <div class="titulo-playground">Ejemplo: img-fluid y ratio-16x9</div>
+          <div class="paneles-editor">
+            <div class="panel-editor">
+              <span class="etiqueta">HTML</span>
+              <textarea class="codigo-html">&lt;div class="container py-3"&gt;
+  &lt;svg class="img-fluid rounded mb-3" viewBox="0 0 900 260"
+       role="img" aria-label="Ilustración abstracta del campus"&gt;
+    &lt;rect width="900" height="260" fill="#123B7A"/&gt;
+    &lt;circle cx="720" cy="70" r="95" fill="#C8AD55"/&gt;
+    &lt;text x="42" y="145" fill="white" font-size="52"&gt;
+      Contenido visual flexible
+    &lt;/text&gt;
+  &lt;/svg&gt;
+
+  &lt;div class="ratio ratio-16x9"&gt;
+    &lt;div class="d-flex align-items-center justify-content-center
+                bg-dark text-white"&gt;
+      Área reservada para video 16:9
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</textarea>
+            </div>
+            <div class="panel-editor">
+              <span class="etiqueta">CSS</span>
+              <textarea class="codigo-css">/* img-fluid conserva la proporción de la imagen.
+   ratio evita saltos de layout al reservar el espacio. */</textarea>
+            </div>
+          </div>
+          <div class="panel-vista">
+            <iframe class="vista-previa vista-previa--alta" title="Resultado del ejemplo de imágenes y proporciones"></iframe>
+          </div>
+          <div class="controles-playground">
+            <button type="button" class="btn-reiniciar">Restablecer código</button>
+          </div>
+        </div>
+        <p class="nota-instruccion">
+          Bootstrap controla cómo se dibuja el medio, pero no el peso del archivo.
+          En proyectos reales combine estas clases con <code>srcset</code>,
+          <code>sizes</code>, formatos eficientes y dimensiones declaradas.
+        </p>
+      </section>
+
+      <section id="pruebas">
+        <h2>Pruebas y depuración de una interfaz Bootstrap</h2>
+        <p>
+          Probar únicamente 375, 768 o 1200 px no basta. Los breakpoints son puntos
+          de transición, pero los errores suelen aparecer entre ellos: textos largos,
+          traducciones, zoom, tablas, imágenes o controles que ya no caben. Arrastre
+          el borde de cada resultado lentamente y compruebe también unos píxeles antes
+          y después de cada breakpoint.
+        </p>
+        <ol>
+          <li>Comience en una anchura pequeña y confirme que no exista desplazamiento horizontal global.</li>
+          <li>Recorra todas las anchuras, no solo los presets, y observe cuándo el contenido pide un cambio.</li>
+          <li>Pruebe la navegación con teclado y verifique foco visible, orden lógico y controles con nombre accesible.</li>
+          <li>Aumente el zoom al 200 % y use textos más largos para descubrir cortes o solapamientos.</li>
+          <li>Inspeccione qué clase gana en cada breakpoint antes de agregar CSS personalizado.</li>
+        </ol>
+        <p class="nota-instruccion">
+          Las clases responsivas reducen CSS repetitivo, pero no sustituyen las
+          decisiones de diseño ni las pruebas con contenido real.
+        </p>
+      </section>
+
+      <section id="recursos">
+        <h2>Recursos externos</h2>
+        <ul class="lista-recursos">
+          <li>
+            <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank" rel="noopener">Documentación oficial de Bootstrap 5.3</a>
+            <span class="descripcion">Referencia completa del framework, incluyendo el sistema de rejilla, los componentes y las clases de utilidad.</span>
+          </li>
+          <li>
+            <a href="https://getbootstrap.com/docs/5.3/layout/grid/" target="_blank" rel="noopener">Documentación del sistema de rejilla</a>
+            <span class="descripcion">Detalle de las clases de columnas, los puntos de quiebre y las opciones de alineación de la rejilla.</span>
+          </li>
+          <li>
+            <a href="https://getbootstrap.com/docs/5.3/components/navbar/" target="_blank" rel="noopener">Documentación del componente navbar</a>
+            <span class="descripcion">Variantes de la barra de navegación y su comportamiento en distintos puntos de quiebre.</span>
+          </li>
+        </ul>
+      </section>
+
     </main>
 
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/show-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/xml-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/html-hint.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/addon/hint/css-hint.min.js"></script>
+  <script src="js/playground.js"></script>
 </body>
 </html>
